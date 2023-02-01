@@ -3,6 +3,29 @@ import style from "../../styles/components/rightSideRegisterStyle.module.scss";
 import Link from "next/link";
 
 function rightSideRegister() {
+  const [fullname, setFullname] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [company, setCompany] = React.useState("");
+  const [position, setPosition] = React.useState("");
+  const [phone, setPhone] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState("");
+
+  const regist = () => {
+    setIsLoading(true);
+    const validationPassword = confirmPassword === password;
+    if (!validationPassword) {
+      setIsError(true);
+      setErrorMsg("Password doesn't match, please try again");
+    } else {
+      setIsError(false);
+    }
+    setIsLoading(false);
+  };
+
   return (
     <>
       <div className={`col-lg-6 col-12 ${style.rightSide}`}>
@@ -15,6 +38,14 @@ function rightSideRegister() {
             </p>
           </div>
 
+          {isError ? (
+            <div className="alert alert-danger" role="alert">
+              {errorMsg}
+            </div>
+          ) : (
+            ""
+          )}
+
           <div>
             <div className="form-group">
               <label htmlFor="">Nama</label>
@@ -22,6 +53,7 @@ function rightSideRegister() {
                 type="text"
                 className="form-control"
                 placeholder="Masukkan nama lengkap"
+                onChange={(event) => setFullname(event.target.value)}
               />
             </div>
             <div className="form-group mt-3">
@@ -30,6 +62,7 @@ function rightSideRegister() {
                 type="text"
                 className="form-control"
                 placeholder="Masukkan alamat email"
+                onChange={(event) => setEmail(event.target.value)}
               />
             </div>
             <div className="form-group mt-3">
@@ -38,6 +71,7 @@ function rightSideRegister() {
                 type="text"
                 className="form-control"
                 placeholder="Masukkan nama perusahaan"
+                onChange={(event) => setCompany(event.target.value)}
               />
             </div>
             <div className="form-group mt-3">
@@ -46,6 +80,7 @@ function rightSideRegister() {
                 type="text"
                 className="form-control"
                 placeholder="Posisi di perusahaan anda"
+                onChange={(event) => setPosition(event.target.value)}
               />
             </div>
             <div className="form-group mt-3">
@@ -54,6 +89,7 @@ function rightSideRegister() {
                 type="text"
                 className="form-control"
                 placeholder="Masukkan no handphone"
+                onChange={(event) => setPhone(event.target.value)}
               />
             </div>
             <div className="form-group mt-3">
@@ -62,6 +98,7 @@ function rightSideRegister() {
                 type="password"
                 className="form-control"
                 placeholder="Masukkan kata sandi"
+                onChange={(event) => setPassword(event.target.value)}
               />
             </div>
             <div className="form-group mt-3">
@@ -70,12 +107,16 @@ function rightSideRegister() {
                 type="password"
                 className="form-control"
                 placeholder="Masukkan konfirmasi kata sandi"
+                onChange={(event) => setConfirmPassword(event.target.value)}
               />
             </div>
           </div>
 
           <div className="text-center">
-            <button className={`btn w-100 mt-5 ${style.btnRegister}`}>
+            <button
+              className={`btn w-100 mt-5 ${style.btnRegister}`}
+              onClick={() => regist()}
+            >
               Daftar
             </button>
 

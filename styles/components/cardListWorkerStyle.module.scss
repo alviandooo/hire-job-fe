@@ -1,0 +1,8 @@
+@import "../global.module.scss";
+
+.btnDetailWorker{
+    background-color: $colorPrimary !important;
+    border-color: $colorPrimary;
+    height: 45px;
+    width: 135px;
+}
