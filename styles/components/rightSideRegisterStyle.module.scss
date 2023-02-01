@@ -1,0 +1,31 @@
+@import "../global.module.scss";
+
+.rightSide{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // background-color: aqua;
+
+    input{
+      height: 50px;
+    }
+
+    label{
+      color: #9EA0A5;
+    }
+    
+    .btnRegister{
+      background-color: $colorSecondary;
+      color: #fff;
+      height: 50px;
+    }
+
+    .linkLogin{
+      color: $colorSecondary;
+      text-decoration: none !important; 
+    }
+
+    .noUnderline {
+      text-decoration: none;
+    }
+  }
