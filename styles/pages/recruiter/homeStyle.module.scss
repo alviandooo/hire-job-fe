@@ -1,0 +1,87 @@
+@import "../../global.module.scss";
+
+.home{
+    background-color: #E5E5E5;;
+    .content{
+        margin-top:85px;
+    }
+
+    .btnSearch{
+        background-color: #5E50A1;
+    }
+
+    .navbarApp{
+        padding-top: 20px;
+        padding-bottom: 20px;
+        top: 0;
+        position: fixed;
+        background-color: #fff;
+        border-color: grey;
+        
+        .logo{
+            width: 115px;
+        }
+
+        .navlinkIcon{
+            font-size: 17pt; 
+            color: #9B9B9B;   
+        }
+
+        .iconProfileNavbar{
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: scale-down;
+            object-position: center;
+        }
+
+    }
+
+    .headTitle{
+        background-color: $colorPrimary;
+        color: #fff;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .footer{
+        color: #fff;
+        padding-top: 40px;
+        padding-bottom: 20px;
+        background-color: $colorPrimary;
+
+        img{
+            width: 140px;
+        }
+
+        .description{
+            margin-top: 15px;
+            width: 300px;
+            margin-bottom: 40px;
+        }
+
+        hr{
+            border-width: 2px;
+            border-color: #fff;
+        }
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (max-width: 767.98px) {
+    .home {
+        .footer {
+            .footerLink, .copyright {
+                text-align: center !important;
+            }
+        }
+
+        .navbarApp{
+            .navlinkGroup{
+                margin-top: 20px;  
+                justify-content: center !important;
+                gap: 40px !important;
+            }
+        }
+    }
+}

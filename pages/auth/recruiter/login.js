@@ -1,5 +1,4 @@
 import React from "react";
-import style from "../../../styles/pages/loginStyle.module.scss";
 import LeftSideAuth from "@/components/molecules/leftSideAuth";
 import RightSideLogin from "@/components/molecules/rightSideLogin";
 import Head from "next/head";
@@ -10,7 +9,7 @@ function login() {
       <Head>
         <title>Login | Hire Job</title>
       </Head>
-      <main className={`row ${style.home}`}>
+      <main className={`row`}>
         <LeftSideAuth />
         <RightSideLogin />
       </main>
