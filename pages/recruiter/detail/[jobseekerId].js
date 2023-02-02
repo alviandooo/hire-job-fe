@@ -66,14 +66,14 @@ function jobseeker() {
         <div className={style.content}>
           <div className="container">
             <div className="row">
-              <div className="col-lg-3">
+              <div className="col-lg-3 mb-3">
                 <div className="rounded bg-white p-4">
                   <div className="d-flex justify-content-center">
                     <img
                       src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
                       width={"100px"}
                       alt=""
-                      className="rounded-circle"
+                      className="rounded-circle object-fit-cover"
                     />
                   </div>
                   <div className="mt-3">
@@ -140,7 +140,7 @@ function jobseeker() {
                           <div key={key} className="col-lg-4 text-center mb-4">
                             <img
                               src={item.img}
-                              className="w-100"
+                              className="w-100 "
                               alt="portfolio-image"
                               height={"200px"}
                             />
@@ -159,7 +159,7 @@ function jobseeker() {
                             <img
                               src="https://assets.tokopedia.net/assets-tokopedia-lite/v2/arael/kratos/36c1015e.png"
                               alt="company-logo"
-                              className="w-100"
+                              className="object-fit-cover"
                               height={"170px"}
                             />
                           </div>
