@@ -1,6 +1,8 @@
 import React from "react";
 import style from "../../styles/components/rightSideRegisterStyle.module.scss";
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 function rightSideRegister() {
   const [fullname, setFullname] = React.useState("");
@@ -12,16 +14,38 @@ function rightSideRegister() {
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState("");
 
-  const regist = () => {
+  const router = useRouter();
+
+  const regist = async () => {
     setIsLoading(true);
-    const validationPassword = confirmPassword === password;
-    if (!validationPassword) {
+    try {
+      const validationPassword = confirmPassword === password;
+      if (validationPassword) {
+        setIsError(false);
+        const data = {
+          fullname,
+          email,
+          company,
+          position,
+          phone_number: phone,
+          password,
+        };
+        const registerUser = await axios.post("/api/recruiter/register", data);
+        setIsSuccess(true);
+        router.replace("/auth/recruiter/login");
+      } else {
+        setIsSuccess(false);
+        setIsError(true);
+        setErrorMsg("Password doesn't match, please try again");
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsSuccess(false);
       setIsError(true);
-      setErrorMsg("Password doesn't match, please try again");
-    } else {
-      setIsError(false);
+      setErrorMsg(error?.response?.data);
     }
     setIsLoading(false);
   };
@@ -38,9 +62,18 @@ function rightSideRegister() {
             </p>
           </div>
 
-          {isError ? (
-            <div className="alert alert-danger" role="alert">
-              {errorMsg}
+          {isError || isSuccess ? (
+            <div
+              className={`alert ${
+                isError ? "alert-danger" : isSuccess ? "alert-success" : ""
+              }`}
+              role="alert"
+            >
+              {isError
+                ? errorMsg
+                : isSuccess
+                ? "Register is successfully!"
+                : null}
             </div>
           ) : (
             ""
@@ -114,10 +147,11 @@ function rightSideRegister() {
 
           <div className="text-center">
             <button
+              disabled={isLoading ? true : false}
               className={`btn w-100 mt-5 ${style.btnRegister}`}
               onClick={() => regist()}
             >
-              Daftar
+              {isLoading ? "Loading..." : "Daftar"}
             </button>
 
             <p className="mt-3">
