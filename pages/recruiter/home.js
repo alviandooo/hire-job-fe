@@ -25,7 +25,7 @@ function home(props) {
     setIsLoading(true);
     axios
       .get(
-        `${process.env.NEXT_PUBLIC_WEBSITE}/api/recruiter/search?limit=${limit}&page=${positionPage}&keyword=${keyword}`
+        `/api/recruiter/search?limit=${limit}&page=${currentPage}&keyword=${keyword}&order=${sort[1]}&sortBy=${sort[0]}`
       )
       .then(({ data }) => {
         setIsLoading(false);
@@ -36,12 +36,12 @@ function home(props) {
       })
       .catch((error) => {
         setIsLoading(false);
-        Swal.fire({
-          icon: "error",
-          title: "Cannot get data from server!",
-          showCancelButton: false,
-          showCloseButton: false,
-        });
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Cannot get data from server!",
+        //   showCancelButton: false,
+        //   showCloseButton: false,
+        // });
       });
   };
 
@@ -54,7 +54,6 @@ function home(props) {
         )
         .then((res) => {
           setIsLoading(false);
-          console.log(res?.data?.rows);
           worker.rows = res?.data?.rows;
         })
         .catch((err) => {
