@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import { BsBell } from "react-icons/bs";
 import { HiOutlineMail } from "react-icons/hi";
@@ -5,6 +6,7 @@ import style from "../../styles/components/navbarStyle.module.scss";
 
 function navbar() {
   const [auth, setAuth] = React.useState("");
+  const router = useRouter();
 
   React.useEffect(() => {
     setAuth(JSON.parse(localStorage.getItem("auth")));
@@ -42,11 +44,33 @@ function navbar() {
             >
               <BsBell className={` ${style.navlinkIcon}`} />
               <HiOutlineMail className={style.navlinkIcon} />
-              <img
-                src={auth.photo_profile}
-                className={style.iconProfileNavbar}
-                alt="icon-profile-navbar"
-              />
+              <div class="dropdown">
+                <button
+                  class="btn btn-transparent dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <img
+                    src={auth.photo_profile}
+                    className={style.iconProfileNavbar}
+                    alt="icon-profile-navbar"
+                  />
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <button
+                      class="dropdown-item"
+                      onClick={() => {
+                        localStorage.clear();
+                        router.replace("/auth/recruiter/login");
+                      }}
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

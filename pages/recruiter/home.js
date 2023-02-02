@@ -3,12 +3,72 @@ import React from "react";
 import style from "../../styles/pages/recruiter/homeStyle.module.scss";
 import Navbar from "@/components/organisms/navbar";
 import Footer from "@/components/organisms/footer";
-import SearchBox from "@/components/molecules/searchBoxRecruiter";
+// import SearchBox from "@/components/molecules/searchBoxRecruiter";
 import CardListWorker from "@/components/molecules/cardListWorker";
 import axios from "axios";
+import styleSearch from "../../styles/components/searchBoxRecruiterStyle.module.scss";
+import { BiSearch } from "react-icons/bi";
 
 function home(props) {
-  const { worker } = props;
+  let { worker } = props;
+
+  const [keyword, setKeyword] = React.useState("");
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [limit, setLimit] = React.useState(1);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [totalPage, setTotalPage] = React.useState(
+    Math.ceil(worker.count / worker.limit)
+  );
+  const [sort, setSort] = React.useState(["id", "DESC"]);
+
+  const fetchPaginationRecipes = (positionPage) => {
+    setIsLoading(true);
+    axios
+      .get(
+        `/api/recruiter/search?limit=${limit}&page=${currentPage}&keyword=${keyword}&order=${sort[1]}&sortBy=${sort[0]}`
+      )
+      .then(({ data }) => {
+        setIsLoading(false);
+        worker.rows = data?.rows;
+
+        setTotalPage(Math.ceil(data?.count / data?.limit));
+        setCurrentPage(positionPage);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Cannot get data from server!",
+        //   showCancelButton: false,
+        //   showCloseButton: false,
+        // });
+      });
+  };
+
+  const handlerSearch = () => {
+    setIsLoading(true);
+    try {
+      axios
+        .get(
+          `/api/recruiter/search?limit=${limit}&page=${currentPage}&keyword=${keyword}&order=${sort[1]}&sortBy=${sort[0]}`
+        )
+        .then((res) => {
+          setIsLoading(false);
+          worker.rows = res?.data?.rows;
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          console.log("error : ", err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -23,15 +83,184 @@ function home(props) {
             </div>
           </section>
 
-          <section id="search-box" className="mt-5 mb-4">
+          <section id="search-box" className="mt-5 mb-4 ms-1 me-1">
             <div className="container">
-              <SearchBox />
+              {/* <SearchBox /> */}
+              <div className="row bg-white rounded p-1">
+                <div className="col-lg-9 p-0 border-end d-flex">
+                  <div class="input-group border-0">
+                    <input
+                      type="text"
+                      class="form-control border-0"
+                      placeholder="Search for any skill"
+                      onChange={(event) => {
+                        setKeyword(event.target.value);
+                      }}
+                    />
+                    <span class="input-group-text border-0 bg-transparent">
+                      <BiSearch />
+                    </span>
+                  </div>
+                </div>
+                <div className="col-lg-2 p-0 text-center">
+                  <button
+                    className="dropdown-toggle w-100 h-100 border-0 bg-transparent"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Sort by {`${sort[0]} ${sort[1].toLowerCase()}`}
+                  </button>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <button
+                        className="dropdown-item"
+                        onClick={() => {
+                          setSort(["id", "ASC"]);
+                          handlerSearch();
+                        }}
+                      >
+                        Sort by (default)
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="dropdown-item "
+                        onClick={() => {
+                          setSort(["skill", "ASC"]);
+                          handlerSearch();
+                        }}
+                      >
+                        Skill (a-z)
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="dropdown-item"
+                        onClick={() => {
+                          setSort(["skill", "DESC"]);
+                          handlerSearch();
+                        }}
+                      >
+                        Skill (z-a)
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="dropdown-item"
+                        onClick={() => {
+                          setSort(["id", "DESC"]);
+                          handlerSearch();
+                        }}
+                      >
+                        Longest Join
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  className={`col-lg-1 pt-2 pb-2 text-center text-white rounded ${styleSearch.btnSearch}`}
+                >
+                  <button
+                    className="bg-transparent text-white border-0"
+                    onClick={() => handlerSearch()}
+                  >
+                    Search
+                  </button>
+                </div>
+              </div>
             </div>
           </section>
 
-          <section id="card-worker" className="mb-5">
+          <section id="card-worker" className="mb-5 ms-1 me-1">
             <div className="container">
-              <CardListWorker jobseekers={worker.rows} />
+              {isLoading ? (
+                <div className="text-center">
+                  <div className="spinner-grow text-warning" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                  <div className="spinner-grow text-warning" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                  <div className="spinner-grow text-warning" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                  <div className="spinner-grow text-warning" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              ) : (
+                <CardListWorker jobseekers={worker.rows} keyword={keyword} />
+              )}
+
+              {worker.rows.length > 0 ? (
+                <>
+                  <div className="container d-flex justify-content-center">
+                    <nav aria-label="Page navigation example" className="mt-4">
+                      <ul className="pagination gap-2">
+                        <li
+                          className={`${style.pageItem} page-item ${
+                            currentPage === 1 ? "disabled" : ""
+                          }`}
+                        >
+                          <a
+                            className="page-link"
+                            onClick={() => {
+                              setCurrentPage(currentPage - 1);
+                              fetchPaginationRecipes(currentPage - 1);
+                            }}
+                            aria-label="Previous"
+                          >
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+
+                        {[...new Array(totalPage)].map((item, page) => {
+                          page++;
+                          return (
+                            <li
+                              key={page}
+                              className={`${style.pageItem} page-item ${
+                                currentPage === page ? "active" : null
+                              }`}
+                            >
+                              <div
+                                className="page-link"
+                                onClick={() => {
+                                  if (currentPage !== page) {
+                                    setCurrentPage(page);
+                                    fetchPaginationRecipes(page);
+                                  }
+                                }}
+                              >
+                                {page}
+                              </div>
+                            </li>
+                          );
+                        })}
+                        <li
+                          className={`${style.pageItem} page-item ${
+                            currentPage === totalPage ? "disabled" : ""
+                          }`}
+                        >
+                          <div
+                            className="page-link"
+                            onClick={() => {
+                              setCurrentPage(currentPage + 1);
+                              fetchPaginationRecipes(currentPage + 1);
+                            }}
+                            aria-label="Next"
+                          >
+                            <span aria-hidden="true">&raquo;</span>
+                          </div>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                </>
+              ) : (
+                ""
+              )}
             </div>
           </section>
         </div>
@@ -43,7 +272,7 @@ function home(props) {
 
 export async function getServerSideProps({ req, res }) {
   const connect = await axios.get(
-    `${process.env.NEXT_PUBLIC_WEBSITE}/api/recruiter/getListWorker`
+    `${process.env.NEXT_PUBLIC_WEBSITE}/api/recruiter/getListWorker?limit=1`
   );
   const data = connect?.data;
 

@@ -1,12 +1,11 @@
 import axios from "axios";
 
 export default function handler(req, res) {
-  const { limit } = req.query;
-
+  const { keyword, limit, page, order, sortBy } = req.query;
   try {
     axios
       .get(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/user/list?limit=${limit}&page=1`
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/user/list?limit=${limit}&page=${page}&order=${order}&sortBy=${sortBy}&keyword=${keyword}`
       )
       .then((response) => {
         const result = response?.data?.data;
