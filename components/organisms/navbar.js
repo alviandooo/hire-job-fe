@@ -4,6 +4,12 @@ import { HiOutlineMail } from "react-icons/hi";
 import style from "../../styles/components/navbarStyle.module.scss";
 
 function navbar() {
+  const [auth, setAuth] = React.useState("");
+
+  React.useEffect(() => {
+    setAuth(JSON.parse(localStorage.getItem("auth")));
+  }, []);
+
   return (
     <>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -37,7 +43,7 @@ function navbar() {
               <BsBell className={` ${style.navlinkIcon}`} />
               <HiOutlineMail className={style.navlinkIcon} />
               <img
-                src="https://www.pngitem.com/pimgs/m/30-307416_profile-icon-png-image-free-download-searchpng-employee.png"
+                src={auth.photo_profile}
                 className={style.iconProfileNavbar}
                 alt="icon-profile-navbar"
               />

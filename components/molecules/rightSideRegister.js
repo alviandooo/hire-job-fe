@@ -34,7 +34,10 @@ function rightSideRegister() {
           phone_number: phone,
           password,
         };
-        const registerUser = await axios.post("/api/recruiter/register", data);
+        const registerUser = await axios.post(
+          "/api/recruiter/auth/register",
+          data
+        );
         setIsSuccess(true);
         router.replace("/auth/recruiter/login");
       } else {

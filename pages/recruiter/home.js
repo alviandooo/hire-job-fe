@@ -5,51 +5,10 @@ import Navbar from "@/components/organisms/navbar";
 import Footer from "@/components/organisms/footer";
 import SearchBox from "@/components/molecules/searchBoxRecruiter";
 import CardListWorker from "@/components/molecules/cardListWorker";
+import axios from "axios";
 
-function home() {
-  const worker = [
-    {
-      picture: "https://randomuser.me/api/portraits/men/70.jpg",
-      fullname: "Restu",
-      position: "web Developer",
-      location: "Palembang",
-      skills: ["HTML", "PHP", "JAVASCRIPT", "LARAVEL", "REACT JS"],
-    },
-    {
-      picture: "https://randomuser.me/api/portraits/men/71.jpg",
-      fullname: "Fachri",
-      position: "Back-end Developer",
-      location: "Jakarta",
-      skills: ["HTML", "REACT JS", "JAVASCRIPT", "LARAVEL"],
-    },
-    {
-      picture: "https://randomuser.me/api/portraits/men/72.jpg",
-      fullname: "Fiqri",
-      position: "DevOps",
-      location: "Jambi",
-      skills: ["HTML", "GITHUB", "DOCKER", "LARAVEL"],
-    },
-    {
-      picture: "https://randomuser.me/api/portraits/men/73.jpg",
-      fullname: "Ali",
-      position: "Front-end Developer",
-      location: "Jakarta",
-      skills: ["HTML", "CSS", "JAVASCRIPT", "LARAVEL"],
-    },
-    {
-      picture: "https://randomuser.me/api/portraits/men/74.jpg",
-      fullname: "Eko",
-      position: "web Designer",
-      location: "Palembang",
-      skills: ["HTML", "FIGMA"],
-    },
-  ];
-
-  // React.useEffect(() => {
-  //   const auth = JSON.parse(localStorage.getItem("auth"));
-  //   console.log(auth);
-  // }, []);
-
+function home(props) {
+  const { worker } = props;
   return (
     <>
       <Head>
@@ -72,7 +31,7 @@ function home() {
 
           <section id="card-worker" className="mb-5">
             <div className="container">
-              <CardListWorker data={worker} />
+              <CardListWorker jobseekers={worker.rows} />
             </div>
           </section>
         </div>
@@ -80,6 +39,19 @@ function home() {
       </main>
     </>
   );
+}
+
+export async function getServerSideProps({ req, res }) {
+  const connect = await axios.get(
+    `${process.env.NEXT_PUBLIC_WEBSITE}/api/recruiter/getListWorker`
+  );
+  const data = connect?.data;
+
+  return {
+    props: {
+      worker: data,
+    },
+  };
 }
 
 export default home;

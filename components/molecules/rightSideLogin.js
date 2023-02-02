@@ -17,7 +17,7 @@ function rightSideLogin() {
     setIsLoading(true);
     try {
       setIsError(false);
-      const connect = await axios.post("/api/recruiter/login", {
+      const connect = await axios.post("/api/recruiter/auth/login", {
         email,
         password,
       });

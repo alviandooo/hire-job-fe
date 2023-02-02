@@ -4,14 +4,14 @@ import BadgeSkill from "../atoms/badgeSkill";
 import style from "../../styles/components/cardListWorkerStyle.module.scss";
 
 function cardListWorker(props) {
-  const { data } = props;
+  const { jobseekers } = props;
 
-  return data.map((item, key) => {
+  return jobseekers.map((item, key) => {
     return (
-      <div className="row bg-white rounded pt-3 pb-3 mt-1">
+      <div key={key} className="row bg-white rounded pt-3 pb-3 mt-1">
         <div className="col-lg-1 pt-2 d-flex justify-content-center">
           <img
-            src={item.picture}
+            src={item?.["user.photo_profile"]}
             width={"80px"}
             height={"80px"}
             alt="profile-worker"
@@ -19,16 +19,16 @@ function cardListWorker(props) {
           />
         </div>
         <div className="col-lg-9 ps-0">
-          <h5>{item.fullname}</h5>
-          <p className="mb-1">{item.position}</p>
+          <h5>{item?.["user.fullname"]}</h5>
+          <p className="mb-1">{item?.job}</p>
           <p className="mb-2">
             <span className="me-1">
               <CiLocationOn />
             </span>
-            {item.location}
+            {item?.domicile}
           </p>
-          <div className="">
-            <BadgeSkill skills={item.skills} />
+          <div>
+            <BadgeSkill skills={item?.skills} />
           </div>
         </div>
         <div className="col-lg-2 d-flex align-items-center">
