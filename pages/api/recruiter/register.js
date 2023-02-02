@@ -15,6 +15,7 @@ export default function handler(req, res) {
       .then((response) => res.status(201).json("Register is successfully!"))
       .catch((err) => {
         const errorMsg =
+          err?.response?.data?.messages ??
           err?.response?.data?.message?.fullname?.message ??
           err?.response?.data?.message?.email?.message ??
           err?.response?.data?.message?.company?.message ??

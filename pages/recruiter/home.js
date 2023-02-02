@@ -45,6 +45,11 @@ function home() {
     },
   ];
 
+  // React.useEffect(() => {
+  //   const auth = JSON.parse(localStorage.getItem("auth"));
+  //   console.log(auth);
+  // }, []);
+
   return (
     <>
       <Head>

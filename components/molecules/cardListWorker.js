@@ -18,7 +18,7 @@ function cardListWorker(props) {
             className="rounded-circle object-fit-cover"
           />
         </div>
-        <div className="col-lg-9 ">
+        <div className="col-lg-9 ps-0">
           <h5>{item.fullname}</h5>
           <p className="mb-1">{item.position}</p>
           <p className="mb-2">

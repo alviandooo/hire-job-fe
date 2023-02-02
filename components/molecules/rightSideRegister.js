@@ -22,6 +22,7 @@ function rightSideRegister() {
   const regist = async () => {
     setIsLoading(true);
     try {
+      setIsError(false);
       const validationPassword = confirmPassword === password;
       if (validationPassword) {
         setIsError(false);
