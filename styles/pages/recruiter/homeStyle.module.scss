@@ -1,0 +1,15 @@
+@import "../../global.module.scss";
+
+.home {
+    background-color: #e5e5e5;
+    .content {
+        margin-top: 85px;
+    }
+
+    .headTitle {
+        background-color: $colorPrimary;
+        color: #fff;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}

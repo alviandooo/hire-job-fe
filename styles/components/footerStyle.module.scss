@@ -1,0 +1,36 @@
+@import "../global.module.scss";
+
+.footer {
+    color: #fff;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    background-color: $colorPrimary;
+
+    img {
+        width: 140px;
+    }
+
+    .description {
+        margin-top: 15px;
+        width: 300px;
+        margin-bottom: 40px;
+    }
+
+    hr {
+        border-width: 2px;
+        border-color: #fff;
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (max-width: 767.98px) {
+    .home {
+        .footer {
+            .footerLink,
+            .copyright {
+                text-align: center !important;
+            }
+        }
+
+    }
+}
