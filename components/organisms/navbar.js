@@ -9,6 +9,13 @@ function navbar() {
   const router = useRouter();
 
   React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token || token === "") {
+      router.replace("/auth/recruiter/login");
+    }
+  }, []);
+
+  React.useEffect(() => {
     setAuth(JSON.parse(localStorage.getItem("auth")));
   }, []);
 
@@ -19,13 +26,16 @@ function navbar() {
         className={`navbar col-lg-12 col-12 navbar-expand-lg ${style.navbarApp}`}
       >
         <div className="container">
-          <a className="navbar-brand" href="#">
+          <button
+            className="navbar-brand border-0 bg-transparent"
+            onClick={() => router.replace("/recruiter/home")}
+          >
             <img
               src="/images/logo-color-primary.png"
               className={style.logo}
               alt="logo-navbar"
             />
-          </a>
+          </button>
           <button
             className="navbar-toggler"
             type="button"
@@ -52,7 +62,7 @@ function navbar() {
                   aria-expanded="false"
                 >
                   <img
-                    src={auth.photo_profile}
+                    src={auth?.photo_profile}
                     className={style.iconProfileNavbar}
                     alt="icon-profile-navbar"
                   />

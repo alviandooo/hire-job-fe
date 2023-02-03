@@ -1,19 +1,17 @@
 import axios from "axios";
 
 export default function handler(req, res) {
-  const { limit } = req.query;
-
+  const id = req.query.id;
   try {
     axios
-      .get(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/user/list?keyword=&limit=${limit}&page=1&order=DESC&sortBy=id`
-      )
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/detail/${id}`)
       .then((response) => {
         const result = response?.data?.data;
-        result.limit = limit;
-        res.status(response?.status).json(result);
+        console.log(result);
+        res.status(200).json({ data: result });
       })
       .catch((err) => {
+        console.log(err);
         res.status(err?.response?.status).json("Eror data");
       });
   } catch (error) {
