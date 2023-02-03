@@ -82,16 +82,16 @@ function home(props) {
               {/* <SearchBox /> */}
               <div className="row bg-white rounded p-1">
                 <div className="col-lg-9 p-0 border-end d-flex">
-                  <div class="input-group border-0">
+                  <div className="input-group border-0">
                     <input
                       type="text"
-                      class="form-control border-0"
+                      className="form-control border-0"
                       placeholder="Search for any skill"
                       onChange={(event) => {
                         setKeyword(event.target.value);
                       }}
                     />
-                    <span class="input-group-text border-0 bg-transparent">
+                    <span className="input-group-text border-0 bg-transparent">
                       <BiSearch />
                     </span>
                   </div>
