@@ -14,7 +14,7 @@ function home(props) {
 
   const [keyword, setKeyword] = React.useState("");
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [limit, setLimit] = React.useState(1);
+  const [limit, setLimit] = React.useState(5);
   const [isLoading, setIsLoading] = React.useState(false);
   const [totalPage, setTotalPage] = React.useState(
     Math.ceil(worker.count / worker.limit)
@@ -36,12 +36,6 @@ function home(props) {
       })
       .catch((error) => {
         setIsLoading(false);
-        // Swal.fire({
-        //   icon: "error",
-        //   title: "Cannot get data from server!",
-        //   showCancelButton: false,
-        //   showCloseButton: false,
-        // });
       });
   };
 
@@ -116,7 +110,7 @@ function home(props) {
                       <button
                         className="dropdown-item"
                         onClick={() => {
-                          setSort(["id", "ASC"]);
+                          setSort(["", ""]);
                           handlerSearch();
                         }}
                       >
@@ -149,7 +143,7 @@ function home(props) {
                       <button
                         className="dropdown-item"
                         onClick={() => {
-                          setSort(["id", "DESC"]);
+                          setSort(["id", "ASC"]);
                           handlerSearch();
                         }}
                       >
@@ -272,7 +266,7 @@ function home(props) {
 
 export async function getServerSideProps({ req, res }) {
   const connect = await axios.get(
-    `${process.env.NEXT_PUBLIC_WEBSITE}/api/recruiter/getListWorker?limit=1`
+    `${process.env.NEXT_PUBLIC_WEBSITE}/api/recruiter/getListWorker?limit=5`
   );
   const data = connect?.data;
 

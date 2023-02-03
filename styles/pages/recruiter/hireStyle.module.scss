@@ -1,0 +1,25 @@
+@import "../../global.module.scss";
+
+.hire {
+    background-color: #e5e5e5;
+    .content {
+        padding-top: 130px;
+        padding-bottom: 30px;
+    }
+
+    .form{
+        label{
+            font-size: 10pt;
+            color: #9EA0A5;
+        }
+
+        input,select{
+            height: 50px;
+        }
+
+        input,select,textarea{
+            font-size: 11pt;
+        }
+    }
+    
+}

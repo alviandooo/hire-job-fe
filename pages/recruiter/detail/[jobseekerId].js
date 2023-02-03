@@ -8,8 +8,11 @@ import { CiLocationOn } from "react-icons/ci";
 import { HiOutlineMail } from "react-icons/hi";
 import { SiInstagram } from "react-icons/si";
 import { FiGithub, FiGitlab } from "react-icons/fi";
+import axios from "axios";
+import { useRouter } from "next/router";
 
-function jobseeker() {
+function jobseeker(props) {
+  const { data } = props.data;
   const portfolio = [
     {
       img: "/images/portfolio/remainder.jpg",
@@ -36,7 +39,6 @@ function jobseeker() {
       app: "Project Management Web",
     },
   ];
-
   const experiences = [
     {
       position: "Engineer",
@@ -56,6 +58,10 @@ function jobseeker() {
     },
   ];
 
+  const router = useRouter();
+
+  const [tab, setTab] = React.useState(1);
+
   return (
     <>
       <Head>
@@ -70,29 +76,32 @@ function jobseeker() {
                 <div className="rounded bg-white p-4">
                   <div className="d-flex justify-content-center">
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
+                      src={data?.[0]?.user?.photo_profile}
                       width={"100px"}
                       alt=""
                       className="rounded-circle object-fit-cover"
                     />
                   </div>
                   <div className="mt-3">
-                    <h5>Louis Tomlinson</h5>
-                    <p>Web Developer</p>
+                    <h5>{data?.[0]?.user?.fullname.toUpperCase()}</h5>
+                    <p>{data?.[0]?.job}</p>
                     <p className="mt-0">
                       <span className="me-1">
                         <CiLocationOn />
                       </span>
-                      Palembang, Sumatera Selatan
+                      {data?.[0]?.domicile}
                     </p>
-                    <p>Freelancer</p>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Vestibulum erat orci, mollis nec gravida sed, ornare quis
-                      urna. Curabitur eu lacus fringilla, vestibulum risus at.
-                    </p>
+                    <p className="text-secondary">Freelancer</p>
+                    <p className="text-secondary">{data?.[0]?.description}</p>
                   </div>
-                  <button className="btn btn-primary w-100 mt-3">Hire</button>
+                  <button
+                    className="btn btn-primary w-100 mt-3"
+                    onClick={() =>
+                      router.replace(`/recruiter/hire/${data?.[0].user_id}`)
+                    }
+                  >
+                    Hire
+                  </button>
 
                   <div className="mt-5 mb-3">
                     <h5>Skill</h5>
@@ -100,7 +109,7 @@ function jobseeker() {
 
                   <div>
                     <BadgeSkill
-                      skills={["PHP", "AWS", "JAVASCRIPT", "CSS", "HTML"]}
+                      skills={["PHP", "Javascript", "Ruby", "postgres"]}
                     />
                   </div>
 
@@ -127,13 +136,29 @@ function jobseeker() {
               <div className="col-lg-9">
                 <div className="bg-white rounded p-4">
                   <div className="menu-profile">
-                    <button className="btn bg-transparent">Portofolio</button>
-                    <button className="btn bg-transparent">
+                    <button
+                      className={`btn bg-transparent rounded-0 ${
+                        tab ? "border-4 border-bottom" : ""
+                      }`}
+                      onClick={() => {
+                        setTab(1);
+                      }}
+                    >
+                      Portofolio
+                    </button>
+                    <button
+                      className={`btn bg-transparent rounded-0 ${
+                        !tab ? "border-4 border-bottom" : ""
+                      }`}
+                      onClick={() => setTab(0)}
+                    >
                       Pengalaman Kerja
                     </button>
                   </div>
 
-                  <div className="portfolio mt-5">
+                  <div
+                    className={`portfolio mt-5 ${tab ? "d-block" : "d-none"}`}
+                  >
                     <div className="row">
                       {portfolio.map((item, key) => {
                         return (
@@ -151,7 +176,9 @@ function jobseeker() {
                     </div>
                   </div>
 
-                  <div className="experience mt-5">
+                  <div
+                    className={`experience mt-5 ${tab ? "d-none" : "d-block"}`}
+                  >
                     {experiences.map((item, key) => {
                       return (
                         <div key={key} className="row mb-2">
@@ -189,6 +216,18 @@ function jobseeker() {
       </main>
     </>
   );
+}
+
+export async function getServerSideProps({ req, res, query }) {
+  const { jobseekerId } = query;
+  const connect = await axios.get(
+    `${process.env.NEXT_PUBLIC_WEBSITE}/api/recruiter/detailJobseeker?id=${jobseekerId}`
+  );
+  const data = connect?.data;
+
+  return {
+    props: { data }, // will be passed to the page component as props
+  };
 }
 
 export default jobseeker;

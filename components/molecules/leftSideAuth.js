@@ -1,7 +1,17 @@
+import { useRouter } from "next/router";
 import React from "react";
 import style from "../../styles/components/leftSideAuthStyle.module.scss";
 
 function leftSideAuth() {
+  const router = useRouter();
+
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token && token !== "") {
+      router.replace("/recruiter/home");
+    }
+  }, []);
+
   return (
     <>
       <div className={`col-lg-6 col-12 ${style.leftSide}`}>

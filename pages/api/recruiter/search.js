@@ -2,6 +2,7 @@ import axios from "axios";
 
 export default function handler(req, res) {
   const { keyword, limit, page, order, sortBy } = req.query;
+  console.log(keyword, limit, page, order, sortBy);
   try {
     axios
       .get(

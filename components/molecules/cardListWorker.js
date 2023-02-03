@@ -2,8 +2,10 @@ import React from "react";
 import { CiLocationOn } from "react-icons/ci";
 import BadgeSkill from "../atoms/badgeSkill";
 import style from "../../styles/components/cardListWorkerStyle.module.scss";
+import { useRouter } from "next/router";
 
 function cardListWorker(props) {
+  const route = useRouter();
   const { jobseekers, keyword } = props;
   if (jobseekers.length > 0) {
     return jobseekers.map((item, key) => {
@@ -34,6 +36,9 @@ function cardListWorker(props) {
           <div className="col-lg-2 d-flex align-items-center">
             <button
               className={`btn btn-warning btn-detail text-white ${style.btnDetailWorker}`}
+              onClick={() => {
+                route.replace(`/recruiter/detail/${item.user_id}`);
+              }}
             >
               Lihat Profile
             </button>
