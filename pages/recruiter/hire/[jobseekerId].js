@@ -6,12 +6,19 @@ import axios from "axios";
 import style from "../../../styles/pages/recruiter/hireStyle.module.scss";
 import BadgeSkill from "@/components/atoms/badgeSkill";
 import { CiLocationOn } from "react-icons/ci";
-import { HiOutlineMail } from "react-icons/hi";
-import { SiInstagram } from "react-icons/si";
-import { FiGithub, FiGitlab } from "react-icons/fi";
+import { useRouter } from "next/router";
 
 function hire(props) {
   const { data } = props.data;
+  const router = useRouter();
+  const [isHire, setIsHire] = React.useState(false);
+
+  const handleHire = () => {
+    setIsHire(true);
+    setTimeout(() => {
+      router.replace("/recruiter/home");
+    }, 2000);
+  };
 
   return (
     <>
@@ -66,6 +73,15 @@ function hire(props) {
                       In euismod ipsum et dui rhoncus auctor.
                     </p>
                   </div>
+
+                  {isHire ? (
+                    <div className={`alert alert-success`} role="alert">
+                      Successfully hire the jobseeker!
+                    </div>
+                  ) : (
+                    ""
+                  )}
+
                   <div className={style.form}>
                     <div className="form-group mt-2">
                       <label>Tujuan tentang pesan ini</label>
@@ -114,7 +130,10 @@ function hire(props) {
                     </div>
 
                     <div>
-                      <button className="btn btn-warning btn-lg text-white w-100 mt-4">
+                      <button
+                        className="btn btn-warning btn-lg text-white w-100 mt-4"
+                        onClick={() => handleHire()}
+                      >
                         Hire
                       </button>
                     </div>
