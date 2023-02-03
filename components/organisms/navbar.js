@@ -54,9 +54,9 @@ function navbar() {
             >
               <BsBell className={` ${style.navlinkIcon}`} />
               <HiOutlineMail className={style.navlinkIcon} />
-              <div class="dropdown">
+              <div className="dropdown">
                 <button
-                  class="btn btn-transparent dropdown-toggle"
+                  className="btn btn-transparent dropdown-toggle"
                   type="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
@@ -67,10 +67,10 @@ function navbar() {
                     alt="icon-profile-navbar"
                   />
                 </button>
-                <ul class="dropdown-menu">
+                <ul className="dropdown-menu">
                   <li>
                     <button
-                      class="dropdown-item"
+                      className="dropdown-item"
                       onClick={() => {
                         localStorage.clear();
                         router.replace("/auth/recruiter/login");
