@@ -1,9 +1,9 @@
 import React from "react";
 import style from "../../../styles/pages/recruiter/detailJobseeker.module.scss";
-import Navbar from "@/components/organisms/navbar";
-import Footer from "@/components/organisms/footer";
+import Navbar from "../../../components/organisms/navbar";
+import Footer from "../../../components/organisms/footer";
 import Head from "next/head";
-import BadgeSkill from "@/components/atoms/badgeSkill";
+import BadgeSkill from "../../../components/atoms/badgeSkill";
 import { CiLocationOn } from "react-icons/ci";
 import { HiOutlineMail } from "react-icons/hi";
 import { SiInstagram } from "react-icons/si";
