@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import style from "../../styles/components/leftSideAuthStyle.module.scss";
 
-function leftSideAuth() {
+function LeftSideAuth() {
   const router = useRouter();
 
   React.useEffect(() => {
@@ -30,4 +30,4 @@ function leftSideAuth() {
   );
 }
 
-export default leftSideAuth;
+export default LeftSideAuth;

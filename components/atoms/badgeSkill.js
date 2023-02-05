@@ -1,9 +1,8 @@
 import React from "react";
 
-function badgeSkill(props) {
+function BadgeSkill(props) {
   const { skills, isAll = false } = props;
   const length = skills.length;
-  const dataSkill = [];
 
   if (!isAll) {
     return skills.map((item, key) => {
@@ -28,4 +27,4 @@ function badgeSkill(props) {
   }
 }
 
-export default badgeSkill;
+export default BadgeSkill;
