@@ -97,7 +97,7 @@
 
 .center::before,
 .center::after {
-  content: '';
+  content: "";
   left: 50%;
   position: absolute;
   filter: blur(45px);
@@ -125,7 +125,7 @@
 
 .thirteen::before,
 .thirteen::after {
-  content: '';
+  content: "";
   position: absolute;
   z-index: -1;
 }
@@ -149,6 +149,14 @@
     rgba(var(--tile-end-rgb), 1)
   );
   background-clip: content-box;
+}
+
+.link {
+  cursor: pointer;
+  background-color: #5e50a1;
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px 5px 10px;
 }
 
 /* Enable hover only on non-touch devices */
