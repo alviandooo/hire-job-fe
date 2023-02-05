@@ -11,7 +11,7 @@ import { FiGithub, FiGitlab } from "react-icons/fi";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-function jobseeker(props) {
+function Jobseeker(props) {
   const { data } = props.data;
   const portfolio = [
     {
@@ -230,4 +230,4 @@ export async function getServerSideProps({ req, res, query }) {
   };
 }
 
-export default jobseeker;
+export default Jobseeker;

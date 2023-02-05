@@ -4,7 +4,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-function rightSideRegister() {
+function RightSideRegister() {
   const [fullname, setFullname] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [company, setCompany] = React.useState("");
@@ -172,4 +172,4 @@ function rightSideRegister() {
   );
 }
 
-export default rightSideRegister;
+export default RightSideRegister;

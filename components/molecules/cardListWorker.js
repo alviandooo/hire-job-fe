@@ -4,7 +4,7 @@ import BadgeSkill from "../atoms/badgeSkill";
 import style from "../../styles/components/cardListWorkerStyle.module.scss";
 import { useRouter } from "next/router";
 
-function cardListWorker(props) {
+function CardListWorker(props) {
   const route = useRouter();
   const { jobseekers, keyword } = props;
   if (jobseekers.length > 0) {
@@ -50,7 +50,7 @@ function cardListWorker(props) {
     return (
       <>
         <div className="w-100 text-center p-2 rounded">
-          <p>Searching for "{keyword}" is nothing! </p>
+          <p>Searching for &quot;{keyword}&quot; is nothing! </p>
         </div>
         ;
       </>
@@ -58,4 +58,4 @@ function cardListWorker(props) {
   }
 }
 
-export default cardListWorker;
+export default CardListWorker;

@@ -8,12 +8,12 @@ import BadgeSkill from "@/components/atoms/badgeSkill";
 import { CiLocationOn } from "react-icons/ci";
 import { useRouter } from "next/router";
 
-function hire(props) {
+function Hire(props) {
   const { data } = props.data;
   const router = useRouter();
   const [isHire, setIsHire] = React.useState(false);
 
-  const handleHire = () => {
+  const HandleHire = () => {
     setIsHire(true);
     setTimeout(() => {
       router.replace("/recruiter/home");
@@ -132,7 +132,7 @@ function hire(props) {
                     <div>
                       <button
                         className="btn btn-warning btn-lg text-white w-100 mt-4"
-                        onClick={() => handleHire()}
+                        onClick={() => HandleHire()}
                       >
                         Hire
                       </button>
@@ -150,9 +150,9 @@ function hire(props) {
 }
 
 export async function getServerSideProps({ req, res, query }) {
-  const { jobseekerId } = query;
+  const { JobseekerId } = query;
   const connect = await axios.get(
-    `${process.env.NEXT_PUBLIC_WEBSITE}/api/recruiter/detailJobseeker?id=${jobseekerId}`
+    `${process.env.NEXT_PUBLIC_WEBSITE}/api/recruiter/detailJobseeker?id=${JobseekerId}`
   );
   const data = connect?.data;
 
@@ -161,4 +161,4 @@ export async function getServerSideProps({ req, res, query }) {
   };
 }
 
-export default hire;
+export default Hire;

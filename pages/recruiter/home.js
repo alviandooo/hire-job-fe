@@ -9,7 +9,7 @@ import axios from "axios";
 import styleSearch from "../../styles/components/searchBoxRecruiterStyle.module.scss";
 import { BiSearch } from "react-icons/bi";
 
-function home(props) {
+function Home(props) {
   let { worker } = props;
 
   const [keyword, setKeyword] = React.useState("");
@@ -277,4 +277,4 @@ export async function getServerSideProps({ req, res }) {
   };
 }
 
-export default home;
+export default Home;

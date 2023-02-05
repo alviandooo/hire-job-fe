@@ -1,6 +1,6 @@
 import React from "react";
-import LeftSideAuth from "@/components/molecules/leftSideAuth";
-import RightSideLogin from "@/components/molecules/rightSideLogin";
+import LeftSideAuth from "@/components/molecules/LeftSideAuth";
+import RightSideLogin from "@/components/molecules/RightSideLogin";
 import Head from "next/head";
 import style from "../../../styles/pages/recruiter/loginRecruiterStyle.module.scss";
 

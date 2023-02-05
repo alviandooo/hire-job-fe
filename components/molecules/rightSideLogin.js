@@ -4,7 +4,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-function rightSideLogin() {
+function RightSideLogin() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
@@ -109,4 +109,4 @@ function rightSideLogin() {
   );
 }
 
-export default rightSideLogin;
+export default RightSideLogin;

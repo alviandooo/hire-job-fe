@@ -2,7 +2,7 @@ import React from "react";
 import style from "../../styles/components/searchBoxRecruiterStyle.module.scss";
 import { BiSearch } from "react-icons/bi";
 
-function searchBoxRecruiter() {
+function SearchBoxRecruiter() {
   const [keyword, setKeyword] = React.useState("");
 
   const handlerSearch = () => {
@@ -69,4 +69,4 @@ function searchBoxRecruiter() {
   );
 }
 
-export default searchBoxRecruiter;
+export default SearchBoxRecruiter;

@@ -3,8 +3,9 @@ import React from "react";
 import { BsBell } from "react-icons/bs";
 import { HiOutlineMail } from "react-icons/hi";
 import style from "../../styles/components/navbarStyle.module.scss";
+import Script from "next/script";
 
-function navbar() {
+function Navbar() {
   const [auth, setAuth] = React.useState("");
   const router = useRouter();
 
@@ -21,7 +22,7 @@ function navbar() {
 
   return (
     <>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+      <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></Script>
       <nav
         className={`navbar col-lg-12 col-12 navbar-expand-lg ${style.navbarApp}`}
       >
@@ -89,4 +90,4 @@ function navbar() {
   );
 }
 
-export default navbar;
+export default Navbar;
