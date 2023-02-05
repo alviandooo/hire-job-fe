@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import LeftSideAuth from "@/components/molecules/LeftSideAuth";
-import RightSideRegister from "@/components/molecules/rightSideRegister";
+import LeftSideAuth from "../../../components/molecules/leftSideAuth";
+import RightSideRegister from "../../../components/molecules/rightSideRegister";
 
 function register() {
   return (
