@@ -65,7 +65,7 @@ function Hire(props) {
                 </div>
               </div>
               <div className="col-lg-9 ps-lg-5">
-                <div className="col-lg-7 ps-lg-5">
+                <div className="col-lg-10 ps-lg-5">
                   <div>
                     <h3>Hubungi {data?.[0]?.user?.fullname.toUpperCase()}</h3>
                     <p>
@@ -150,9 +150,9 @@ function Hire(props) {
 }
 
 export async function getServerSideProps({ req, res, query }) {
-  const { JobseekerId } = query;
+  const { jobseekerId } = query;
   const connect = await axios.get(
-    `${process.env.NEXT_PUBLIC_WEBSITE}/api/recruiter/detailJobseeker?id=${JobseekerId}`
+    `${process.env.NEXT_PUBLIC_API_URL}/v1/user/detail/${jobseekerId}`
   );
   const data = connect?.data;
 

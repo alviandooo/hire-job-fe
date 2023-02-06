@@ -6,6 +6,11 @@
         margin-top: 85px;
     }
 
+    .activePage{
+        background-color: $colorPrimary !important;
+        color: #fff !important;
+    }
+
     .headTitle {
         background-color: $colorPrimary;
         color: #fff;
