@@ -11,14 +11,14 @@ import { BiSearch } from "react-icons/bi";
 
 function Home(props) {
   let { worker } = props;
-
   const [keyword, setKeyword] = React.useState("");
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [limit, setLimit] = React.useState(5);
+  const [limit, setLimit] = React.useState(1);
   const [isLoading, setIsLoading] = React.useState(false);
   const [totalPage, setTotalPage] = React.useState(
-    Math.ceil(worker.count / worker.limit)
+    Math.ceil(worker.count / worker.limit) || worker.count / limit
   );
+
   const [sort, setSort] = React.useState(["id", "DESC"]);
 
   const fetchPaginationRecipes = (positionPage) => {
@@ -184,10 +184,10 @@ function Home(props) {
                   </div>
                 </div>
               ) : (
-                <CardListWorker jobseekers={worker.rows} keyword={keyword} />
+                <CardListWorker jobseekers={worker?.rows} keyword={keyword} />
               )}
 
-              {worker.rows.length > 0 ? (
+              {worker?.count > 0 ? (
                 <>
                   <div className="container d-flex justify-content-center">
                     <nav aria-label="Page navigation example" className="mt-4">
@@ -214,12 +214,14 @@ function Home(props) {
                           return (
                             <li
                               key={page}
-                              className={`${style.pageItem} page-item ${
-                                currentPage === page ? "active" : null
-                              }`}
+                              className={`${style.pageItem} page-item`}
                             >
                               <div
-                                className="page-link"
+                                className={`page-link text-black ${
+                                  currentPage === page
+                                    ? `${style.activePage}`
+                                    : null
+                                }`}
                                 onClick={() => {
                                   if (currentPage !== page) {
                                     setCurrentPage(page);
@@ -266,10 +268,9 @@ function Home(props) {
 
 export async function getServerSideProps({ req, res }) {
   const connect = await axios.get(
-    `${process.env.NEXT_PUBLIC_WEBSITE}/api/recruiter/getListWorker?limit=5`
+    `${process.env.NEXT_PUBLIC_API_URL}/v1/user/list?limit=1&page=1&order=DESC&sortBy=id`
   );
-  const data = connect?.data;
-
+  const data = connect?.data?.data;
   return {
     props: {
       worker: data,

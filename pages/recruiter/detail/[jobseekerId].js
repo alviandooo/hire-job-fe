@@ -221,7 +221,7 @@ function Jobseeker(props) {
 export async function getServerSideProps({ req, res, query }) {
   const { jobseekerId } = query;
   const connect = await axios.get(
-    `${process.env.NEXT_PUBLIC_WEBSITE}/api/recruiter/detailJobseeker?id=${jobseekerId}`
+    `${process.env.NEXT_PUBLIC_API_URL}/v1/user/detail/${jobseekerId}`
   );
   const data = connect?.data;
 

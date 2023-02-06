@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 function CardListWorker(props) {
   const route = useRouter();
   const { jobseekers, keyword } = props;
-  if (jobseekers.length > 0) {
+  if (jobseekers?.length > 0) {
     return jobseekers.map((item, key) => {
       return (
         <div key={key} className="row bg-white rounded pt-3 pb-3 mt-1">
