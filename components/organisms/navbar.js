@@ -4,20 +4,16 @@ import { BsBell } from "react-icons/bs";
 import { HiOutlineMail } from "react-icons/hi";
 import style from "../../styles/components/navbarStyle.module.scss";
 import Script from "next/script";
+import { useSelector } from "react-redux";
 
 function Navbar() {
-  const [auth, setAuth] = React.useState("");
   const router = useRouter();
+  const auth = useSelector((state) => state.auth);
 
   React.useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token || token === "") {
+    if (!auth?.auth) {
       router.replace("/auth/recruiter/login");
     }
-  }, []);
-
-  React.useEffect(() => {
-    setAuth(JSON.parse(localStorage.getItem("auth")));
   }, []);
 
   return (

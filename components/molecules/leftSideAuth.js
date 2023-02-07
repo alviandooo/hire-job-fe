@@ -21,9 +21,14 @@ function LeftSideAuth() {
             alt="logo-app"
             className={style.logo}
           />
-          <h1 className={style.title}>
-            Temukan developer berbakat & terbaik di berbagai bidang keahlian
-          </h1>
+
+          <div className="d-flex h-100 justifiy-content-center align-items-center">
+            <div className="col-lg-9 ps-5 pe-2">
+              <h1 className={style.title}>
+                Temukan developer berbakat & terbaik di berbagai bidang keahlian
+              </h1>
+            </div>
+          </div>
         </div>
       </div>
     </>

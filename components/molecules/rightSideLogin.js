@@ -1,8 +1,10 @@
 import React from "react";
 import style from "../../styles/components/rightSideLoginStyle.module.scss";
+import * as authReducer from "@/store/auth/authSlice";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
 function RightSideLogin() {
   const [email, setEmail] = React.useState("");
@@ -12,6 +14,7 @@ function RightSideLogin() {
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState("");
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const submitLogin = async () => {
     setIsLoading(true);
@@ -24,12 +27,17 @@ function RightSideLogin() {
 
       const auth = JSON.stringify(connect?.data?.data);
       const token = connect?.data?.token;
-      localStorage.setItem("auth", auth);
-      localStorage.setItem("token", token);
+      const isRecruiter = connect?.data?.data?.recruiter_id === 0;
+      dispatch(authReducer.setAuth(connect?.data?.data));
+      dispatch(authReducer.setToken(connect?.data?.token));
+      dispatch(authReducer.setIsRecruiter(!isRecruiter));
+      // localStorage.setItem("auth", auth);
+      // localStorage.setItem("token", token);
       setIsSuccess(true);
 
       router.replace("/recruiter/home");
     } catch (error) {
+      console.log(error);
       setIsSuccess(false);
       setIsError(true);
       setErrorMsg(error?.response?.data);

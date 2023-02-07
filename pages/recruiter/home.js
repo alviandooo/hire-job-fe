@@ -3,7 +3,7 @@ import React from "react";
 import style from "../../styles/pages/recruiter/homeStyle.module.scss";
 import Navbar from "../../components/organisms/navbar";
 import Footer from "../../components/organisms/footer";
-// import SearchBox from "../../components/molecules/searchBoxRecruiter";
+import SearchBox from "../../components/molecules/searchBoxRecruiter";
 import CardListWorker from "../../components/molecules/cardListWorker";
 import axios from "axios";
 import styleSearch from "../../styles/components/searchBoxRecruiterStyle.module.scss";
