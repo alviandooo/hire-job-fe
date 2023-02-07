@@ -12,7 +12,7 @@ function Navbar() {
 
   React.useEffect(() => {
     if (!auth?.auth) {
-      router.replace("/auth/recruiter/login");
+      router.replace("/auth/login");
     }
   }, []);
 
@@ -70,7 +70,7 @@ function Navbar() {
                       className="dropdown-item"
                       onClick={() => {
                         localStorage.clear();
-                        router.replace("/auth/recruiter/login");
+                        router.replace("/auth/login");
                       }}
                     >
                       Logout
