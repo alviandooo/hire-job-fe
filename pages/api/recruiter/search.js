@@ -2,6 +2,9 @@ import axios from "axios";
 
 export default function handler(req, res) {
   const { keyword, limit, page, order, sortBy } = req.query;
+  console.log(
+    `${process.env.NEXT_PUBLIC_API_URL}/v1/user/list?limit=${limit}&page=${page}&order=${order}&sortBy=${sortBy}&keyword=${keyword}`
+  );
   try {
     axios
       .get(

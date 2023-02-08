@@ -18,7 +18,6 @@ function Home(props) {
   const [totalPage, setTotalPage] = React.useState(
     Math.ceil(worker.count / limit) ?? worker.count / limit
   );
-
   const [sort, setSort] = React.useState(["id", "DESC"]);
 
   React.useEffect(() => {
@@ -98,6 +97,7 @@ function Home(props) {
             <div className="container">
               {/* <SearchBox /> */}
               <div className="row bg-white rounded p-1">
+                {/* <h3>{sort}</h3> */}
                 <div className="col-lg-9 p-0 border-end d-flex">
                   <div className="input-group border-0">
                     <input
@@ -127,7 +127,7 @@ function Home(props) {
                       <button
                         className="dropdown-item"
                         onClick={() => {
-                          setSort(["", ""]);
+                          setSort((state) => ["id", "DESC"]);
                           handlerSearch();
                         }}
                       >
@@ -138,7 +138,7 @@ function Home(props) {
                       <button
                         className="dropdown-item "
                         onClick={() => {
-                          setSort(["skill", "ASC"]);
+                          setSort((state) => ["skill", "ASC"]);
                           handlerSearch();
                         }}
                       >
@@ -149,7 +149,7 @@ function Home(props) {
                       <button
                         className="dropdown-item"
                         onClick={() => {
-                          setSort(["skill", "DESC"]);
+                          setSort((state) => ["skill", "DESC"]);
                           handlerSearch();
                         }}
                       >
@@ -160,7 +160,7 @@ function Home(props) {
                       <button
                         className="dropdown-item"
                         onClick={() => {
-                          setSort(["id", "ASC"]);
+                          setSort((state) => ["id", "ASC"]);
                           handlerSearch();
                         }}
                       >
