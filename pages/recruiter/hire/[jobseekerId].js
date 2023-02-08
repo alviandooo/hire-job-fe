@@ -7,17 +7,47 @@ import style from "../../../styles/pages/recruiter/hireStyle.module.scss";
 import BadgeSkill from "@/components/atoms/badgeSkill";
 import { CiLocationOn } from "react-icons/ci";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 function Hire(props) {
   const { data } = props.data;
+  const auth = useSelector((state) => state?.auth?.auth);
   const router = useRouter();
-  const [isHire, setIsHire] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [purpose, setPurpose] = React.useState("Projek");
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [phone, setPhone] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [isError, setIsError] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState("");
+  const recruiterId = auth.id;
 
-  const HandleHire = () => {
-    setIsHire(true);
-    setTimeout(() => {
+  const HandleHire = async () => {
+    setIsError(false);
+    setIsSuccess(false);
+    setIsLoading(true);
+    try {
+      const data = {
+        user_id: recruiterId,
+        purpose,
+        fullname: name,
+        email,
+        phone_number: phone,
+        description,
+      };
+      const hire = await axios.post("/api/recruiter/hire", data);
+      setIsLoading(false);
+      setIsError(false);
+      setIsSuccess(true);
       router.replace("/recruiter/home");
-    }, 2000);
+    } catch (error) {
+      setIsSuccess(false);
+      setIsError(true);
+      setErrorMsg(error?.response?.data);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -74,9 +104,22 @@ function Hire(props) {
                     </p>
                   </div>
 
-                  {isHire ? (
-                    <div className={`alert alert-success`} role="alert">
-                      Successfully hire the jobseeker!
+                  {isError || isSuccess ? (
+                    <div
+                      className={`alert ${
+                        isError
+                          ? "alert-danger"
+                          : isSuccess
+                          ? "alert-success"
+                          : ""
+                      }`}
+                      role="alert"
+                    >
+                      {isError
+                        ? errorMsg
+                        : isSuccess
+                        ? "Hiring is successfully!"
+                        : null}
                     </div>
                   ) : (
                     ""
@@ -85,8 +128,13 @@ function Hire(props) {
                   <div className={style.form}>
                     <div className="form-group mt-2">
                       <label>Tujuan tentang pesan ini</label>
-                      <select name="" className="form-control" id="">
-                        <option value="">Projek</option>
+                      <select
+                        name=""
+                        className="form-control"
+                        id=""
+                        onChange={(event) => setPurpose(event.target.value)}
+                      >
+                        <option value="Projek">Projek</option>
                       </select>
                     </div>
 
@@ -96,6 +144,7 @@ function Hire(props) {
                         type="text"
                         className="form-control"
                         placeholder="Masukan nama lengkap"
+                        onChange={(event) => setName(event.target.value)}
                       />
                     </div>
 
@@ -105,6 +154,7 @@ function Hire(props) {
                         type="text"
                         className="form-control"
                         placeholder="Masukan email"
+                        onChange={(event) => setEmail(event.target.value)}
                       />
                     </div>
 
@@ -114,6 +164,7 @@ function Hire(props) {
                         type="text"
                         className="form-control"
                         placeholder="Masukan No Handphone"
+                        onChange={(event) => setPhone(event.target.value)}
                       />
                     </div>
 
@@ -126,15 +177,17 @@ function Hire(props) {
                         cols="30"
                         rows="8"
                         placeholder="Deskripsikan/jelaskan lebih detail "
+                        onChange={(event) => setDescription(event.target.value)}
                       ></textarea>
                     </div>
 
                     <div>
                       <button
+                        disabled={isLoading ? true : false}
                         className="btn btn-warning btn-lg text-white w-100 mt-4"
                         onClick={() => HandleHire()}
                       >
-                        Hire
+                        {isLoading ? "Loading..." : "Hire"}
                       </button>
                     </div>
                   </div>

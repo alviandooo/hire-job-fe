@@ -13,10 +13,8 @@ import { useRouter } from "next/router";
 
 function Jobseeker(props) {
   const { data } = props.data;
-  console.log(data);
   const portfolio = data?.[0]?.portfolios;
   const experiences = data?.[0]?.work_experiences;
-  console.log(experiences);
   const router = useRouter();
 
   const [tab, setTab] = React.useState(1);
@@ -56,7 +54,7 @@ function Jobseeker(props) {
                   <button
                     className="btn btn-primary w-100 mt-3"
                     onClick={() =>
-                      router.replace(`/recruiter/hire/${data?.[0].user_id}`)
+                      router.replace(`/recruiter/hire/${data?.[0].id}`)
                     }
                   >
                     Hire
