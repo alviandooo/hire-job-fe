@@ -1,14 +1,16 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { useSelector } from "react-redux";
 import style from "../../styles/components/leftSideAuthStyle.module.scss";
 
 function LeftSideAuth() {
   const router = useRouter();
+  const auth = useSelector((state) => state?.auth);
 
   React.useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token && token !== "") {
-      router.replace("/recruiter/home");
+    if (auth?.auth) {
+      const role = auth?.auth?.recruiter_id !== 0 ? "recruiter" : "jobseeker";
+      router.replace(`/${role}/home`);
     }
   }, []);
 

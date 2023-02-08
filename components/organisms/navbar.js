@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 function Navbar() {
   const router = useRouter();
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state?.auth);
 
   React.useEffect(() => {
     if (!auth?.auth) {
@@ -59,7 +59,7 @@ function Navbar() {
                   aria-expanded="false"
                 >
                   <img
-                    src={auth?.photo_profile}
+                    src={auth?.auth?.photo_profile}
                     className={style.iconProfileNavbar}
                     alt="icon-profile-navbar"
                   />

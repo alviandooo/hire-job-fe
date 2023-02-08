@@ -37,7 +37,7 @@ function CardListWorker(props) {
             <button
               className={`btn btn-warning btn-detail text-white ${style.btnDetailWorker}`}
               onClick={() => {
-                route.replace(`/recruiter/detail/${item.user_id}`);
+                route.replace(`/jobseeker/detail/${item.id}`);
               }}
             >
               Lihat Profile

@@ -13,51 +13,10 @@ import { useRouter } from "next/router";
 
 function Jobseeker(props) {
   const { data } = props.data;
-  const portfolio = [
-    {
-      img: "/images/portfolio/remainder.jpg",
-      app: "Remainder App",
-    },
-    {
-      img: "/images/portfolio/social-media.jpg",
-      app: "Social Media App",
-    },
-    {
-      img: "/images/portfolio/management.jpg",
-      app: "Project Management Web",
-    },
-    {
-      img: "/images/portfolio/remainder-2.jpg",
-      app: "Remainder App",
-    },
-    {
-      img: "/images/portfolio/social-media-2.jpg",
-      app: "Social Media App",
-    },
-    {
-      img: "/images/portfolio/management-2.jpg",
-      app: "Project Management Web",
-    },
-  ];
-  const experiences = [
-    {
-      position: "Engineer",
-      company: "Tokopedia",
-      start: "July 2019",
-      end: "January 2020",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum erat orci, mollis nec gravida sed, ornare quis urna. Curabitur eu lacus fringilla, vestibulum risus at.",
-    },
-    {
-      position: "Web Developer",
-      company: "Tokopedia",
-      start: "July 2019",
-      end: "January 2020",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum erat orci, mollis nec gravida sed, ornare quis urna. Curabitur eu lacus fringilla, vestibulum risus at.",
-    },
-  ];
-
+  console.log(data);
+  const portfolio = data?.[0]?.portfolios;
+  const experiences = data?.[0]?.work_experiences;
+  console.log(experiences);
   const router = useRouter();
 
   const [tab, setTab] = React.useState(1);
@@ -133,6 +92,7 @@ function Jobseeker(props) {
                   </div>
                 </div>
               </div>
+
               <div className="col-lg-9">
                 <div className="bg-white rounded p-4">
                   <div className="menu-profile">
@@ -160,16 +120,19 @@ function Jobseeker(props) {
                     className={`portfolio mt-5 ${tab ? "d-block" : "d-none"}`}
                   >
                     <div className="row">
-                      {portfolio.map((item, key) => {
+                      {portfolio?.map((item, key) => {
                         return (
-                          <div key={key} className="col-lg-4 text-center mb-4">
+                          <div
+                            key={item?.id}
+                            className="col-lg-4 text-center mb-4"
+                          >
                             <img
-                              src={item.img}
+                              src={item?.photo}
                               className="w-100 "
                               alt="portfolio-image"
                               height={"200px"}
                             />
-                            <p className="mt-2">{item.app}</p>
+                            <p className="mt-2">{item?.name}</p>
                           </div>
                         );
                       })}
@@ -179,9 +142,9 @@ function Jobseeker(props) {
                   <div
                     className={`experience mt-5 ${tab ? "d-none" : "d-block"}`}
                   >
-                    {experiences.map((item, key) => {
+                    {experiences?.map((item, key) => {
                       return (
-                        <div key={key} className="row mb-2">
+                        <div key={item?.id} className="row mb-2">
                           <div className="col-lg-2">
                             <img
                               src="https://assets.tokopedia.net/assets-tokopedia-lite/v2/arael/kratos/36c1015e.png"
@@ -191,16 +154,11 @@ function Jobseeker(props) {
                             />
                           </div>
                           <div className="col-lg-10">
-                            <h5>Engineer</h5>
-                            <h6>Tokopedia</h6>
+                            <h5>{item?.position}</h5>
+                            <h6>{item?.company}</h6>
 
-                            <p>July 2019 - January 2020</p>
-                            <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit. Vestibulum erat orci, mollis nec gravida
-                              sed, ornare quis urna. Curabitur eu lacus
-                              fringilla, vestibulum risus at.
-                            </p>
+                            <p>{item?.date}</p>
+                            <p>{item?.description}</p>
                             <hr />
                           </div>
                         </div>
