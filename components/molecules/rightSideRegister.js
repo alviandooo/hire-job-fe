@@ -160,14 +160,13 @@ function RightSideRegister() {
 
             <p className="mt-3">
               Anda sudah punya akun?
-              <Link href="/auth/recruiter/login" className={style.noUnderline}>
+              <Link href="/auth/login" className={style.noUnderline}>
                 <span className={style.linkLogin}> Masuk disini</span>
               </Link>
             </p>
           </div>
         </div>
       </div>
-      ;
     </>
   );
 }

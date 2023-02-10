@@ -5,7 +5,7 @@ import style from "../../styles/components/leftSideAuthStyle.module.scss";
 
 function LeftSideAuth() {
   const router = useRouter();
-  const auth = useSelector((state) => state?.auth);
+  const auth = useSelector((state) => state?.auth?.auth);
 
   React.useEffect(() => {
     if (auth?.auth) {

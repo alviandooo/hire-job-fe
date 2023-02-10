@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
       </PersistGate>
     </Provider>
   );

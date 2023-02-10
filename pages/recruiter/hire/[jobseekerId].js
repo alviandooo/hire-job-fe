@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 
 function Hire(props) {
   const { data } = props.data;
-  const auth = useSelector((state) => state?.auth?.auth);
+  const auth = useSelector((state) => state?.auth);
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
   const [purpose, setPurpose] = React.useState("Projek");
@@ -22,7 +22,9 @@ function Hire(props) {
   const [isError, setIsError] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState("");
-  const recruiterId = auth.id;
+  // const recruiterId = auth?.auth?.id;
+  const userId = data?.[0]?.id;
+  const token = auth?.token;
 
   const HandleHire = async () => {
     setIsError(false);
@@ -30,12 +32,13 @@ function Hire(props) {
     setIsLoading(true);
     try {
       const data = {
-        user_id: recruiterId,
+        user_id: userId,
         purpose,
         fullname: name,
         email,
         phone_number: phone,
         description,
+        token,
       };
       const hire = await axios.post("/api/recruiter/hire", data);
       setIsLoading(false);

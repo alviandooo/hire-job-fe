@@ -13,7 +13,7 @@ function Home(props) {
   let { worker } = props;
   const [keyword, setKeyword] = React.useState("");
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [limit, setLimit] = React.useState(10);
+  const [limit, setLimit] = React.useState(5);
   const [isLoading, setIsLoading] = React.useState(false);
   const [totalPage, setTotalPage] = React.useState(
     Math.ceil(worker.count / limit) ?? worker.count / limit
@@ -36,24 +36,6 @@ function Home(props) {
         setIsLoading(false);
       });
   }, [sort, currentPage]);
-
-  // const fetchPaginationRecipes = (positionPage) => {
-  //   setIsLoading(true);
-  //   axios
-  //     .get(
-  //       `/api/recruiter/search?limit=${limit}&page=${positionPage}&keyword=${keyword}&order=${sort[1]}&sortBy=${sort[0]}`
-  //     )
-  //     .then(({ data }) => {
-  //       setIsLoading(false);
-  //       worker.rows = data?.rows;
-
-  //       setTotalPage(Math.ceil(data?.count / data?.limit));
-  //       setCurrentPage(positionPage);
-  //     })
-  //     .catch((error) => {
-  //       setIsLoading(false);
-  //     });
-  // };
 
   const handlerSearch = () => {
     setIsLoading(true);
@@ -287,7 +269,7 @@ function Home(props) {
 
 export async function getServerSideProps({ req, res }) {
   const connect = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/v1/user/list?limit=10&page=1&order=DESC&sortBy=id`
+    `${process.env.NEXT_PUBLIC_API_URL}/v1/user/list?limit=5&page=1&order=DESC&sortBy=id`
   );
   const data = connect?.data?.data;
   return {

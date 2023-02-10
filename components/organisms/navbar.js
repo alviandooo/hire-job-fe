@@ -4,11 +4,13 @@ import { BsBell } from "react-icons/bs";
 import { HiOutlineMail } from "react-icons/hi";
 import style from "../../styles/components/navbarStyle.module.scss";
 import Script from "next/script";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import * as authReducer from "@/store/auth/authSlice";
 
 function Navbar() {
   const router = useRouter();
   const auth = useSelector((state) => state?.auth);
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     if (!auth?.auth) {
@@ -69,7 +71,9 @@ function Navbar() {
                     <button
                       className="dropdown-item"
                       onClick={() => {
-                        localStorage.clear();
+                        dispatch(authReducer.setAuth(null));
+                        dispatch(authReducer.setToken(null));
+                        dispatch(authReducer.setIsRecruiter(null));
                         router.replace("/auth/login");
                       }}
                     >

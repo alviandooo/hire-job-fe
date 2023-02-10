@@ -31,11 +31,11 @@ function RightSideRegister() {
           password,
         };
         const registerUser = await axios.post(
-          "/api/recruiter/auth/register",
+          "/api/jobseeker/auth/register",
           data
         );
         setIsSuccess(true);
-        router.replace("/auth/recruiter/login");
+        router.replace("/auth/login");
       } else {
         setIsSuccess(false);
         setIsError(true);
@@ -138,14 +138,13 @@ function RightSideRegister() {
 
             <p className="mt-3">
               Anda sudah punya akun?
-              <Link href="/auth/recruiter/login" className={style.noUnderline}>
+              <Link href="/auth/login" className={style.noUnderline}>
                 <span className={style.linkLogin}> Masuk disini</span>
               </Link>
             </p>
           </div>
         </div>
       </div>
-      ;
     </>
   );
 }

@@ -10,13 +10,17 @@ import { SiInstagram } from "react-icons/si";
 import { FiGithub, FiGitlab } from "react-icons/fi";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 function Jobseeker(props) {
   const { data } = props.data;
+  const skills = data?.[0]?.skills;
   const portfolio = data?.[0]?.portfolios;
   const experiences = data?.[0]?.work_experiences;
   const router = useRouter();
-
+  const auth = useSelector((state) => state.auth);
+  // console.log(auth?.isRecruiter);
+  const [isEdit, setIsEdit] = React.useState(false);
   const [tab, setTab] = React.useState(1);
 
   return (
@@ -51,14 +55,34 @@ function Jobseeker(props) {
                     <p className="text-secondary">Freelancer</p>
                     <p className="text-secondary">{data?.[0]?.description}</p>
                   </div>
-                  <button
-                    className="btn btn-primary w-100 mt-3"
-                    onClick={() =>
-                      router.replace(`/recruiter/hire/${data?.[0].id}`)
-                    }
-                  >
-                    Hire
-                  </button>
+
+                  {auth?.isRecruiter ? (
+                    <button
+                      className={`btn btn-primary w-100 mt-3 ${style.btnPrimary}`}
+                      onClick={() =>
+                        router.push(`/recruiter/hire/${data?.[0].id}`)
+                      }
+                    >
+                      Hire
+                    </button>
+                  ) : (
+                    <></>
+                  )}
+
+                  {data?.[0]?.id === auth?.auth?.user_id ? (
+                    <>
+                      <button
+                        className={`btn btn-warning w-100 mt-3 ${
+                          isEdit ? "d-none" : "d-block"
+                        }`}
+                        onClick={() => setIsEdit(true)}
+                      >
+                        Edit
+                      </button>
+                    </>
+                  ) : (
+                    <></>
+                  )}
 
                   <div className="mt-5 mb-3">
                     <h5>Skill</h5>
@@ -70,101 +94,226 @@ function Jobseeker(props) {
                     />
                   </div>
 
-                  <div className="mt-5">
-                    <p className="d-flex align-items-center">
-                      <HiOutlineMail size={"16pt"} className="me-3" />
-                      <span>Louistommo@gmail.com</span>
-                    </p>
-                    <p className="d-flex align-items-center">
-                      <SiInstagram size={"14pt"} className="me-3" />
-                      <span>@Louist91</span>
-                    </p>
-                    <p className="d-flex align-items-center">
-                      <FiGithub size={"15pt"} className="me-3" />
-                      <span>@Louistommo</span>
-                    </p>
-                    <p className="d-flex align-items-center">
-                      <FiGitlab size={"15pt"} className="me-3" />
-                      <span>@Louistommo91</span>
-                    </p>
-                  </div>
+                  {!isEdit ? (
+                    <div className="mt-5">
+                      <p className="d-flex align-items-center">
+                        <HiOutlineMail size={"16pt"} className="me-3" />
+                        <span>Louistommo@gmail.com</span>
+                      </p>
+                      <p className="d-flex align-items-center">
+                        <SiInstagram size={"14pt"} className="me-3" />
+                        <span>@Louist91</span>
+                      </p>
+                      <p className="d-flex align-items-center">
+                        <FiGithub size={"15pt"} className="me-3" />
+                        <span>@Louistommo</span>
+                      </p>
+                      <p className="d-flex align-items-center">
+                        <FiGitlab size={"15pt"} className="me-3" />
+                        <span>@Louistommo91</span>
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      <button
+                        className={`btn btn-warning w-100 mt-5 ${style.btnPrimary}`}
+                        onClick={() => setIsEdit(false)}
+                      >
+                        Simpan Perubahan
+                      </button>
+                      <button
+                        className={`btn btn-warning w-100 mt-3 ${style.btnSecondary}`}
+                        onClick={() => setIsEdit(false)}
+                      >
+                        Batal
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
 
-              <div className="col-lg-9">
-                <div className="bg-white rounded p-4">
-                  <div className="menu-profile">
-                    <button
-                      className={`btn bg-transparent rounded-0 ${
-                        tab ? "border-4 border-bottom" : ""
-                      }`}
-                      onClick={() => {
-                        setTab(1);
-                      }}
-                    >
-                      Portofolio
-                    </button>
-                    <button
-                      className={`btn bg-transparent rounded-0 ${
-                        !tab ? "border-4 border-bottom" : ""
-                      }`}
-                      onClick={() => setTab(0)}
-                    >
-                      Pengalaman Kerja
-                    </button>
-                  </div>
+              {!isEdit ? (
+                <div className="col-lg-9">
+                  <div className="bg-white rounded p-4">
+                    <div className="menu-profile">
+                      <button
+                        className={`btn bg-transparent rounded-0 ${
+                          tab ? "border-4 border-bottom" : ""
+                        }`}
+                        onClick={() => {
+                          setTab(1);
+                        }}
+                      >
+                        Portofolio
+                      </button>
+                      <button
+                        className={`btn bg-transparent rounded-0 ${
+                          !tab ? "border-4 border-bottom" : ""
+                        }`}
+                        onClick={() => setTab(0)}
+                      >
+                        Pengalaman Kerja
+                      </button>
+                    </div>
 
-                  <div
-                    className={`portfolio mt-5 ${tab ? "d-block" : "d-none"}`}
-                  >
-                    <div className="row">
-                      {portfolio?.map((item, key) => {
+                    <div
+                      className={`portfolio mt-5 ${tab ? "d-block" : "d-none"}`}
+                    >
+                      <div className="row">
+                        {portfolio?.map((item, key) => {
+                          return (
+                            <div
+                              key={item?.id}
+                              className="col-lg-4 text-center mb-4"
+                            >
+                              <img
+                                src={item?.photo}
+                                className="w-100 bg-secondary rounded "
+                                alt="portfolio-image"
+                                height={"200px"}
+                              />
+                              <p className="mt-2">{item?.name}</p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div
+                      className={`experience mt-5 ${
+                        tab ? "d-none" : "d-block"
+                      }`}
+                    >
+                      {experiences?.map((item, key) => {
                         return (
-                          <div
-                            key={item?.id}
-                            className="col-lg-4 text-center mb-4"
-                          >
-                            <img
-                              src={item?.photo}
-                              className="w-100 "
-                              alt="portfolio-image"
-                              height={"200px"}
-                            />
-                            <p className="mt-2">{item?.name}</p>
+                          <div key={item?.id} className="row mb-2">
+                            <div className="col-lg-2">
+                              <img
+                                src="https://assets.tokopedia.net/assets-tokopedia-lite/v2/arael/kratos/36c1015e.png"
+                                alt="company-logo"
+                                className="object-fit-cover"
+                                height={"170px"}
+                              />
+                            </div>
+                            <div className="col-lg-10">
+                              <h5>{item?.position}</h5>
+                              <h6>{item?.company}</h6>
+
+                              <p>{item?.date}</p>
+                              <p>{item?.description}</p>
+                              <hr />
+                            </div>
                           </div>
                         );
                       })}
                     </div>
                   </div>
+                </div>
+              ) : (
+                <div className="col-lg-9">
+                  <div className="card bg-white rounded">
+                    <div className="card-header d-flex align-items-center pt-4 pb-3">
+                      <h5>Data Diri</h5>
+                    </div>
+                    <div className="card-body">
+                      <div className="form-group">
+                        <label>Nama Lengkap</label>
+                        <input
+                          className="form-control"
+                          placeholder="Masukan nama lengkap"
+                        />
+                      </div>
+                      <div className="form-group mt-3">
+                        <label>Job desk</label>
+                        <input
+                          className="form-control"
+                          placeholder="Masukan job desk"
+                        />
+                      </div>
+                      <div className="form-group mt-3">
+                        <label>Domisili</label>
+                        <input
+                          className="form-control"
+                          placeholder="Masukan domisili"
+                        />
+                      </div>
+                      <div className="form-group mt-3">
+                        <label>Tempat kerja</label>
+                        <input
+                          className="form-control"
+                          placeholder="Masukan tempat kerja"
+                        />
+                      </div>
+                      <div className="form-group mt-3">
+                        <label>Deskripsi singkat</label>
+                        <textarea
+                          className="form-control"
+                          rows={"4"}
+                          placeholder="Deskripsi singkat"
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-                  <div
-                    className={`experience mt-5 ${tab ? "d-none" : "d-block"}`}
-                  >
-                    {experiences?.map((item, key) => {
-                      return (
-                        <div key={item?.id} className="row mb-2">
-                          <div className="col-lg-2">
-                            <img
-                              src="https://assets.tokopedia.net/assets-tokopedia-lite/v2/arael/kratos/36c1015e.png"
-                              alt="company-logo"
-                              className="object-fit-cover"
-                              height={"170px"}
-                            />
-                          </div>
-                          <div className="col-lg-10">
-                            <h5>{item?.position}</h5>
-                            <h6>{item?.company}</h6>
-
-                            <p>{item?.date}</p>
-                            <p>{item?.description}</p>
-                            <hr />
-                          </div>
+                  <div className="card bg-white rounded mt-4">
+                    <div className="card-header d-flex align-items-center pt-4 pb-3">
+                      <h5>Skill</h5>
+                    </div>
+                    <div className="card-body">
+                      <div className="row">
+                        <div className="col-lg-10 col-12">
+                          <input className="form-control" placeholder="Java" />
                         </div>
-                      );
-                    })}
+                        <div className="col-lg-2 col-12">
+                          <button className="btn btn-warning w-100">
+                            Simpan
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="card bg-white rounded mt-4">
+                    <div className="card-header d-flex align-items-center pt-4 pb-3">
+                      <h5>Pengalaman Kerja</h5>
+                    </div>
+                    <div className="card-body">
+                      <div className="form-group">
+                        <label>Posisi</label>
+                        <input
+                          className="form-control"
+                          placeholder="Web Developer"
+                        />
+                      </div>
+                      <div className="row mt-3">
+                        <div className="col-lg-6 col-12 mb-2">
+                          <label>Nama Perusahaan</label>
+                          <input
+                            className="form-control"
+                            placeholder="PT Harus bisa"
+                          />
+                        </div>
+                        <div className="col-lg-6 col-12">
+                          <label>Bulan/tahun</label>
+                          <input
+                            className="form-control"
+                            type={"month"}
+                            placeholder="2023-02"
+                          />
+                        </div>
+                      </div>
+                      <div className="form-group mt-3">
+                        <label>Deskripsi singkat</label>
+                        <textarea
+                          className="form-control"
+                          rows={"4"}
+                          placeholder="Deskripsikan pekerjaan anda"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

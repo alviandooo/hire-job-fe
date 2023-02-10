@@ -37,7 +37,7 @@ function CardListWorker(props) {
             <button
               className={`btn btn-warning btn-detail text-white ${style.btnDetailWorker}`}
               onClick={() => {
-                route.replace(`/jobseeker/detail/${item.id}`);
+                route.push(`/jobseeker/detail/${item.id}`);
               }}
             >
               Lihat Profile
@@ -52,7 +52,6 @@ function CardListWorker(props) {
         <div className="w-100 text-center p-2 rounded">
           <p>Searching for &quot;{keyword}&quot; is nothing! </p>
         </div>
-        ;
       </>
     );
   }

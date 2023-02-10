@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import authReducer from "@/store/auth/authSlice";
+import jobseekerReducer from "@/store/jobseeker/jobseekerSlice";
 
 // import redux-persist
 import { persistStore, persistReducer } from "redux-persist";
@@ -14,12 +15,13 @@ const customizedMiddleware = getDefaultMiddleware({
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  jobseeker: jobseekerReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth"],
+  whitelist: ["auth", "jobseeker"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

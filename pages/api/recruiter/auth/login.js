@@ -11,7 +11,6 @@ export default function handler(req, res) {
       })
       .then((response) => res.status(response.status).json(response.data))
       .catch((err) => {
-        console.log(err.response.data.messages);
         const errorMsg =
           err?.response?.data?.messages ??
           err.response?.data?.message?.email?.message ??
