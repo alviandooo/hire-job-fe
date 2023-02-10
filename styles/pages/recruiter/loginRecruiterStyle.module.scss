@@ -2,3 +2,11 @@
     height: 100vh;
     overflow-y: hidden;
 }
+
+// Medium devices (tablets, 768px and up)
+@media (max-width: 768px) { 
+    .login{
+        height: 100vh;
+        overflow-y: scroll;
+    }
+ }

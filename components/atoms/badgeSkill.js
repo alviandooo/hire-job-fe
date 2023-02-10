@@ -4,10 +4,13 @@ function BadgeSkill(props) {
   const { skills, isAll = false } = props;
   const length = skills.length;
 
-  if (!isAll) {
+  if (isAll) {
     return skills.map((item, key) => {
       return (
-        <span key={key} className="badge bg-warning p-2 w-auto me-1 mb-2">
+        <span
+          key={key}
+          className="badge bg-warning p-2 w-auto me-1 mb-2 text-black"
+        >
           {item}
         </span>
       );

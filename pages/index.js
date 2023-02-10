@@ -16,22 +16,35 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div>
-          <h1>
-            <b>
-              Welcome to <img src="/images/logo-color-primary.png" alt="" />
-            </b>
-          </h1>
-          <h3 className="mt-5">
-            Login as
-            <span
-              className={`ms-2 me-2 ${styles.link}`}
-              onClick={() => router.replace("/auth/recruiter/login")}
-            >
-              Recruiter
-            </span>
-            or<span className={`ms-2 ${styles.link}`}>Developer</span>
-          </h3>
+        <div className="d-flex justify-content-center">
+          <div>
+            <h1>
+              <b>
+                Selamat Datang di
+                <img
+                  src="/images/logo-color-primary.png"
+                  alt=""
+                  className="ms-3"
+                />
+              </b>
+            </h1>
+            <h3 className="mt-5">
+              Daftar Sebagai
+              <span
+                className={`ms-2 me-2 ${styles.link}`}
+                onClick={() => router.push("/auth/recruiter/register")}
+              >
+                Recruiter
+              </span>
+              atau
+              <span
+                className={`ms-2 ${styles.link}`}
+                onClick={() => router.push("/auth/jobseeker/register")}
+              >
+                Developer
+              </span>
+            </h3>
+          </div>
         </div>
       </main>
     </>

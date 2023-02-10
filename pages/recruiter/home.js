@@ -3,7 +3,7 @@ import React from "react";
 import style from "../../styles/pages/recruiter/homeStyle.module.scss";
 import Navbar from "../../components/organisms/navbar";
 import Footer from "../../components/organisms/footer";
-// import SearchBox from "../../components/molecules/searchBoxRecruiter";
+import SearchBox from "../../components/molecules/searchBoxRecruiter";
 import CardListWorker from "../../components/molecules/cardListWorker";
 import axios from "axios";
 import styleSearch from "../../styles/components/searchBoxRecruiterStyle.module.scss";
@@ -13,15 +13,14 @@ function Home(props) {
   let { worker } = props;
   const [keyword, setKeyword] = React.useState("");
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [limit, setLimit] = React.useState(1);
+  const [limit, setLimit] = React.useState(5);
   const [isLoading, setIsLoading] = React.useState(false);
   const [totalPage, setTotalPage] = React.useState(
-    Math.ceil(worker.count / worker.limit) || worker.count / limit
+    Math.ceil(worker.count / limit) ?? worker.count / limit
   );
-
   const [sort, setSort] = React.useState(["id", "DESC"]);
 
-  const fetchPaginationRecipes = (positionPage) => {
+  React.useEffect(() => {
     setIsLoading(true);
     axios
       .get(
@@ -32,12 +31,11 @@ function Home(props) {
         worker.rows = data?.rows;
 
         setTotalPage(Math.ceil(data?.count / data?.limit));
-        setCurrentPage(positionPage);
       })
       .catch((error) => {
         setIsLoading(false);
       });
-  };
+  }, [sort, currentPage]);
 
   const handlerSearch = () => {
     setIsLoading(true);
@@ -81,6 +79,7 @@ function Home(props) {
             <div className="container">
               {/* <SearchBox /> */}
               <div className="row bg-white rounded p-1">
+                {/* <h3>{sort}</h3> */}
                 <div className="col-lg-9 p-0 border-end d-flex">
                   <div className="input-group border-0">
                     <input
@@ -110,7 +109,7 @@ function Home(props) {
                       <button
                         className="dropdown-item"
                         onClick={() => {
-                          setSort(["", ""]);
+                          setSort((state) => ["id", "DESC"]);
                           handlerSearch();
                         }}
                       >
@@ -121,7 +120,7 @@ function Home(props) {
                       <button
                         className="dropdown-item "
                         onClick={() => {
-                          setSort(["skill", "ASC"]);
+                          setSort((state) => ["skill", "ASC"]);
                           handlerSearch();
                         }}
                       >
@@ -132,7 +131,7 @@ function Home(props) {
                       <button
                         className="dropdown-item"
                         onClick={() => {
-                          setSort(["skill", "DESC"]);
+                          setSort((state) => ["skill", "DESC"]);
                           handlerSearch();
                         }}
                       >
@@ -143,11 +142,11 @@ function Home(props) {
                       <button
                         className="dropdown-item"
                         onClick={() => {
-                          setSort(["id", "ASC"]);
+                          setSort((state) => ["id", "ASC"]);
                           handlerSearch();
                         }}
                       >
-                        Longest Join
+                        Oldest
                       </button>
                     </li>
                   </ul>
@@ -201,7 +200,7 @@ function Home(props) {
                             className="page-link"
                             onClick={() => {
                               setCurrentPage(currentPage - 1);
-                              fetchPaginationRecipes(currentPage - 1);
+                              // fetchPaginationRecipes(currentPage - 1);
                             }}
                             aria-label="Previous"
                           >
@@ -209,31 +208,33 @@ function Home(props) {
                           </a>
                         </li>
 
-                        {[...new Array(totalPage)].map((item, page) => {
-                          page++;
-                          return (
-                            <li
-                              key={page}
-                              className={`${style.pageItem} page-item`}
-                            >
-                              <div
-                                className={`page-link text-black ${
-                                  currentPage === page
-                                    ? `${style.activePage}`
-                                    : null
-                                }`}
-                                onClick={() => {
-                                  if (currentPage !== page) {
-                                    setCurrentPage(page);
-                                    fetchPaginationRecipes(page);
-                                  }
-                                }}
+                        {[...new Array(parseInt(totalPage))].map(
+                          (item, page) => {
+                            page++;
+                            return (
+                              <li
+                                key={page}
+                                className={`${style.pageItem} page-item`}
                               >
-                                {page}
-                              </div>
-                            </li>
-                          );
-                        })}
+                                <div
+                                  className={`page-link text-black ${
+                                    currentPage === page
+                                      ? `${style.activePage}`
+                                      : null
+                                  }`}
+                                  onClick={() => {
+                                    if (currentPage !== page) {
+                                      setCurrentPage(page);
+                                      // fetchPaginationRecipes(page);
+                                    }
+                                  }}
+                                >
+                                  {page}
+                                </div>
+                              </li>
+                            );
+                          }
+                        )}
                         <li
                           className={`${style.pageItem} page-item ${
                             currentPage === totalPage ? "disabled" : ""
@@ -243,7 +244,7 @@ function Home(props) {
                             className="page-link"
                             onClick={() => {
                               setCurrentPage(currentPage + 1);
-                              fetchPaginationRecipes(currentPage + 1);
+                              // fetchPaginationRecipes(currentPage + 1);
                             }}
                             aria-label="Next"
                           >
@@ -268,7 +269,7 @@ function Home(props) {
 
 export async function getServerSideProps({ req, res }) {
   const connect = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/v1/user/list?limit=1&page=1&order=DESC&sortBy=id`
+    `${process.env.NEXT_PUBLIC_API_URL}/v1/user/list?limit=5&page=1&order=DESC&sortBy=id`
   );
   const data = connect?.data?.data;
   return {

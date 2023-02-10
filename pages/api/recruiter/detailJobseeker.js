@@ -7,7 +7,6 @@ export default function handler(req, res) {
       .get(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/detail/${id}`)
       .then((response) => {
         const result = response?.data?.data;
-        console.log(result);
         res.status(200).json({ data: result });
       })
       .catch((err) => {

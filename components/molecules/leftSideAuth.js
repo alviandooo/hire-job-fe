@@ -1,14 +1,16 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { useSelector } from "react-redux";
 import style from "../../styles/components/leftSideAuthStyle.module.scss";
 
 function LeftSideAuth() {
   const router = useRouter();
+  const auth = useSelector((state) => state?.auth?.auth);
 
   React.useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token && token !== "") {
-      router.replace("/recruiter/home");
+    if (auth?.auth) {
+      const role = auth?.auth?.recruiter_id !== 0 ? "recruiter" : "jobseeker";
+      router.replace(`/${role}/home`);
     }
   }, []);
 
@@ -21,9 +23,14 @@ function LeftSideAuth() {
             alt="logo-app"
             className={style.logo}
           />
-          <h1 className={style.title}>
-            Temukan developer berbakat & terbaik di berbagai bidang keahlian
-          </h1>
+
+          <div className="d-flex h-100 justifiy-content-center align-items-center">
+            <div className="col-lg-9 ps-5 pe-2">
+              <h1 className={style.title}>
+                Temukan developer berbakat & terbaik di berbagai bidang keahlian
+              </h1>
+            </div>
+          </div>
         </div>
       </div>
     </>

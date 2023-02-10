@@ -1,5 +1,5 @@
 import React from "react";
-import style from "../../styles/components/rightSideRegisterStyle.module.scss";
+import style from "../../../styles/components/rightSideRegisterStyle.module.scss";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -7,8 +7,6 @@ import { useRouter } from "next/router";
 function RightSideRegister() {
   const [fullname, setFullname] = React.useState("");
   const [email, setEmail] = React.useState("");
-  const [company, setCompany] = React.useState("");
-  const [position, setPosition] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
@@ -29,17 +27,15 @@ function RightSideRegister() {
         const data = {
           fullname,
           email,
-          company,
-          position,
           phone_number: phone,
           password,
         };
         const registerUser = await axios.post(
-          "/api/recruiter/auth/register",
+          "/api/jobseeker/auth/register",
           data
         );
         setIsSuccess(true);
-        router.replace("/auth/recruiter/login");
+        router.replace("/auth/login");
       } else {
         setIsSuccess(false);
         setIsError(true);
@@ -100,24 +96,6 @@ function RightSideRegister() {
                 className="form-control"
                 placeholder="Masukkan alamat email"
                 onChange={(event) => setEmail(event.target.value)}
-              />
-            </div>
-            <div className="form-group mt-3">
-              <label htmlFor="">Perusahaan</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Masukkan nama perusahaan"
-                onChange={(event) => setCompany(event.target.value)}
-              />
-            </div>
-            <div className="form-group mt-3">
-              <label htmlFor="">Jabatan</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Posisi di perusahaan anda"
-                onChange={(event) => setPosition(event.target.value)}
               />
             </div>
             <div className="form-group mt-3">

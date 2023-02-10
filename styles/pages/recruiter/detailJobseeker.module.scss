@@ -5,6 +5,30 @@
     .content {
         padding-top: 130px;
         padding-bottom: 30px;
+
+        .btnPrimary{
+            color: #fff;
+            background-color: $colorPrimary;
+            border-color: $colorPrimary;
+        }
+
+        .btnPrimary:hover{
+            color: $colorPrimary;
+            background-color: #fff;
+            border-color: $colorPrimary;
+        }
+
+        .btnSecondary{
+            color: $colorPrimary;
+            background-color: #fff;
+            border-color: $colorPrimary;
+        }
+
+        .btnSecondary:hover{
+            color: #fff;
+            background-color: $colorPrimary;
+            border-color: $colorPrimary;
+        }
     }
 
     

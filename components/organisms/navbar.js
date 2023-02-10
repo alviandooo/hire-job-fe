@@ -4,20 +4,18 @@ import { BsBell } from "react-icons/bs";
 import { HiOutlineMail } from "react-icons/hi";
 import style from "../../styles/components/navbarStyle.module.scss";
 import Script from "next/script";
+import { useDispatch, useSelector } from "react-redux";
+import * as authReducer from "@/store/auth/authSlice";
 
 function Navbar() {
-  const [auth, setAuth] = React.useState("");
   const router = useRouter();
+  const auth = useSelector((state) => state?.auth);
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token || token === "") {
-      router.replace("/auth/recruiter/login");
+    if (!auth?.auth) {
+      router.replace("/auth/login");
     }
-  }, []);
-
-  React.useEffect(() => {
-    setAuth(JSON.parse(localStorage.getItem("auth")));
   }, []);
 
   return (
@@ -27,16 +25,27 @@ function Navbar() {
         className={`navbar col-lg-12 col-12 navbar-expand-lg ${style.navbarApp}`}
       >
         <div className="container">
-          <button
-            className="navbar-brand border-0 bg-transparent"
-            onClick={() => router.replace("/recruiter/home")}
-          >
-            <img
-              src="/images/logo-color-primary.png"
-              className={style.logo}
-              alt="logo-navbar"
-            />
-          </button>
+          {auth.isRecruiter ? (
+            <button
+              className="navbar-brand border-0 bg-transparent"
+              onClick={() => router.push("/recruiter/home")}
+            >
+              <img
+                src="/images/logo-color-primary.png"
+                className={style.logo}
+                alt="logo-navbar"
+              />
+            </button>
+          ) : (
+            <button className="navbar-brand border-0 bg-transparent">
+              <img
+                src="/images/logo-color-primary.png"
+                className={style.logo}
+                alt="logo-navbar"
+              />
+            </button>
+          )}
+
           <button
             className="navbar-toggler"
             type="button"
@@ -63,7 +72,7 @@ function Navbar() {
                   aria-expanded="false"
                 >
                   <img
-                    src={auth?.photo_profile}
+                    src={auth?.auth?.photo_profile}
                     className={style.iconProfileNavbar}
                     alt="icon-profile-navbar"
                   />
@@ -73,13 +82,29 @@ function Navbar() {
                     <button
                       className="dropdown-item"
                       onClick={() => {
-                        localStorage.clear();
-                        router.replace("/auth/recruiter/login");
+                        dispatch(authReducer.setAuth(null));
+                        dispatch(authReducer.setToken(null));
+                        dispatch(authReducer.setIsRecruiter(null));
+                        router.replace("/auth/login");
                       }}
                     >
                       Logout
                     </button>
                   </li>
+                  {!auth.isRecruiter ? (
+                    <li>
+                      <button
+                        className="dropdown-item"
+                        onClick={() => {
+                          // router.push(`/jobseeker/detail/${auth?.user_id}`);
+                        }}
+                      >
+                        Profile
+                      </button>
+                    </li>
+                  ) : (
+                    ""
+                  )}
                 </ul>
               </div>
             </div>

@@ -1,8 +1,10 @@
 import React from "react";
 import style from "../../styles/components/rightSideLoginStyle.module.scss";
+import * as authReducer from "@/store/auth/authSlice";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
 function RightSideLogin() {
   const [email, setEmail] = React.useState("");
@@ -12,6 +14,7 @@ function RightSideLogin() {
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState("");
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const submitLogin = async () => {
     setIsLoading(true);
@@ -22,14 +25,23 @@ function RightSideLogin() {
         password,
       });
 
-      const auth = JSON.stringify(connect?.data?.data);
-      const token = connect?.data?.token;
-      localStorage.setItem("auth", auth);
-      localStorage.setItem("token", token);
+      // const auth = JSON.stringify(connect?.data?.data);
+      // const token = connect?.data?.token;
+      const isRecruiter = connect?.data?.data?.recruiter_id !== 0;
+      dispatch(authReducer.setAuth(connect?.data?.data));
+      dispatch(authReducer.setToken(connect?.data?.token));
+      dispatch(authReducer.setIsRecruiter(isRecruiter));
+      // localStorage.setItem("auth", auth);
+      // localStorage.setItem("token", token);
       setIsSuccess(true);
 
-      router.replace("/recruiter/home");
+      if (isRecruiter) {
+        router.replace("/recruiter/home");
+      } else {
+        router.replace(`/jobseeker/detail/${connect?.data?.data?.user_id}`);
+      }
     } catch (error) {
+      console.log(error);
       setIsSuccess(false);
       setIsError(true);
       setErrorMsg(error?.response?.data);
@@ -94,17 +106,13 @@ function RightSideLogin() {
 
             <p className="mt-3">
               Anda belum punya akun?
-              <Link
-                href="/auth/recruiter/register"
-                className={style.noUnderline}
-              >
+              <Link href="/" className={style.noUnderline}>
                 <span className={style.linkRegister}> Daftar disini</span>
               </Link>
             </p>
           </div>
         </div>
       </div>
-      ;
     </>
   );
 }
