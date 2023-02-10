@@ -25,16 +25,27 @@ function Navbar() {
         className={`navbar col-lg-12 col-12 navbar-expand-lg ${style.navbarApp}`}
       >
         <div className="container">
-          <button
-            className="navbar-brand border-0 bg-transparent"
-            onClick={() => router.replace("/recruiter/home")}
-          >
-            <img
-              src="/images/logo-color-primary.png"
-              className={style.logo}
-              alt="logo-navbar"
-            />
-          </button>
+          {auth.isRecruiter ? (
+            <button
+              className="navbar-brand border-0 bg-transparent"
+              onClick={() => router.push("/recruiter/home")}
+            >
+              <img
+                src="/images/logo-color-primary.png"
+                className={style.logo}
+                alt="logo-navbar"
+              />
+            </button>
+          ) : (
+            <button className="navbar-brand border-0 bg-transparent">
+              <img
+                src="/images/logo-color-primary.png"
+                className={style.logo}
+                alt="logo-navbar"
+              />
+            </button>
+          )}
+
           <button
             className="navbar-toggler"
             type="button"
@@ -80,6 +91,20 @@ function Navbar() {
                       Logout
                     </button>
                   </li>
+                  {!auth.isRecruiter ? (
+                    <li>
+                      <button
+                        className="dropdown-item"
+                        onClick={() => {
+                          // router.push(`/jobseeker/detail/${auth?.user_id}`);
+                        }}
+                      >
+                        Profile
+                      </button>
+                    </li>
+                  ) : (
+                    ""
+                  )}
                 </ul>
               </div>
             </div>
