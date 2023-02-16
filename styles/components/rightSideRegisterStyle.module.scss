@@ -1,9 +1,12 @@
 @import "../global.module.scss";
 
 .rightSide{
+    padding-top: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100vh;
+    overflow-y: auto;
     // background-color: aqua;
 
     input{
@@ -29,3 +32,17 @@
       text-decoration: none;
     }
   }
+
+  // Medium devices (tablets, 768px and up)
+@media (max-width: 767.98px) {
+  .rightSide{
+    padding-top: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    overflow-y: scroll;
+    // background-color: aqua;
+
+  }
+}
