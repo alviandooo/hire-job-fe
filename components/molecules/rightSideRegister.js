@@ -39,7 +39,7 @@ function RightSideRegister() {
           data
         );
         setIsSuccess(true);
-        router.replace("/auth/recruiter/login");
+        router.replace("/auth/login");
       } else {
         setIsSuccess(false);
         setIsError(true);

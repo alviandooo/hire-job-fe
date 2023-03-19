@@ -15,30 +15,33 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className="d-flex justify-content-center">
-          <div>
-            <h1>
-              <b>
-                Selamat Datang di
-                <img
-                  src="/images/logo-color-primary.png"
-                  alt=""
-                  className="ms-3"
-                />
-              </b>
-            </h1>
-            <h3 className="mt-5">
+      <main className="d-flex justify-content-center align-items-center vh-100 w-100">
+        <div className="container w-100">
+          <div className="w-100 text-center h-100">
+            <div>
+              <h1 className="">
+                <b>
+                  Selamat Datang di
+                  <img
+                    src="/images/logo-color-primary.png"
+                    alt=""
+                    className="ms-3"
+                  />
+                </b>
+              </h1>
+            </div>
+            <div></div>
+            <h3 className="mt-5 gap-2">
               Daftar Sebagai
               <span
-                className={`ms-2 me-2 ${styles.link}`}
+                className={` ${styles.link}`}
                 onClick={() => router.push("/auth/recruiter/register")}
               >
                 Recruiter
               </span>
               atau
               <span
-                className={`ms-2 ${styles.link}`}
+                className={` ${styles.link}`}
                 onClick={() => router.push("/auth/jobseeker/register")}
               >
                 Developer
