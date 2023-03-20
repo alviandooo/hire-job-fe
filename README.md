@@ -17,3 +17,10 @@ npm run start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Screenshoot
+
+![alt text](https://res.cloudinary.com/duou4s4dl/image/upload/v1679279068/Screenshot_54_ixzhox.png)
+![](https://res.cloudinary.com/duou4s4dl/image/upload/v1679279105/Screenshot_51_jre4ri.png)
+![](https://res.cloudinary.com/duou4s4dl/image/upload/v1679279106/Screenshot_53_iylna4.png)
+![](https://res.cloudinary.com/duou4s4dl/image/upload/v1679279106/Screenshot_52_sblngs.png)
