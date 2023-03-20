@@ -19,34 +19,32 @@ export default function Home() {
         <div className="container w-100">
           <div className="w-100 text-center h-100">
             <div>
-              <h1 className="">
+              <h1 className="mt-2">
                 <b>
                   Selamat Datang di
                   <img
                     src="/images/logo-color-primary.png"
                     alt=""
-                    className="ms-3"
+                    className={`ms-3 ${styles.logo}`}
                   />
                 </b>
               </h1>
             </div>
             <div></div>
-            <h3 className="mt-5 gap-2">
-              Daftar Sebagai
-              <span
-                className={` ${styles.link}`}
-                onClick={() => router.push("/auth/recruiter/register")}
-              >
-                Recruiter
-              </span>
-              atau
-              <span
-                className={` ${styles.link}`}
-                onClick={() => router.push("/auth/jobseeker/register")}
-              >
-                Developer
-              </span>
-            </h3>
+            <h3 className="mt-5 mb-4">Daftar Sebagai</h3>
+            <button
+              className={` ${styles.link}`}
+              onClick={() => router.push("/auth/recruiter/register")}
+            >
+              Recruiter
+            </button>
+            atau
+            <button
+              className={` ${styles.link}`}
+              onClick={() => router.push("/auth/jobseeker/register")}
+            >
+              Developer
+            </button>
           </div>
         </div>
       </main>

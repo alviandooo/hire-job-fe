@@ -11,10 +11,11 @@ import { FiGithub, FiGitlab } from "react-icons/fi";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+import { RiDeleteBin2Line } from "react-icons/ri";
 
 function Jobseeker(props) {
   const { data } = props.data;
-  const skills = data?.[0]?.skills;
+  const skills = JSON.parse(data?.[0]?.skills);
   const portfolio = data?.[0]?.portfolios;
   const experiences = data?.[0]?.work_experiences;
   const router = useRouter();
@@ -22,6 +23,14 @@ function Jobseeker(props) {
   // console.log(auth?.isRecruiter);
   const [isEdit, setIsEdit] = React.useState(false);
   const [tab, setTab] = React.useState(1);
+  const [newSkills, setNewSkills] = React.useState([]);
+  const [skillValue, setSkillValue] = React.useState("");
+
+  React.useEffect(() => {
+    if (skills.length !== 0) {
+      setNewSkills(skills);
+    }
+  }, []);
 
   return (
     <>
@@ -89,9 +98,11 @@ function Jobseeker(props) {
                   </div>
 
                   <div>
-                    <BadgeSkill
-                      skills={["PHP", "Javascript", "Ruby", "postgres"]}
-                    />
+                    {skills.length > 0 ? (
+                      <BadgeSkill skills={skills} />
+                    ) : (
+                      "Add your skill"
+                    )}
                   </div>
 
                   {!isEdit ? (
@@ -255,6 +266,7 @@ function Jobseeker(props) {
                     </div>
                   </div>
 
+                  {/* // input skill */}
                   <div className="card bg-white rounded mt-4">
                     <div className="card-header d-flex align-items-center pt-4 pb-3">
                       <h5>Skill</h5>
@@ -262,7 +274,48 @@ function Jobseeker(props) {
                     <div className="card-body">
                       <div className="row">
                         <div className="col-lg-10 col-12">
-                          <input className="form-control" placeholder="Java" />
+                          <input
+                            className="form-control"
+                            placeholder="Type your skill..."
+                            value={skillValue}
+                            onChange={(e) => {
+                              setSkillValue(e.target.value);
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                setNewSkills((state) => [...state, skillValue]);
+                                setSkillValue("");
+                              }
+                            }}
+                          />
+                          <small>*press enter for new skill</small>
+
+                          <div className="mt-2">
+                            {newSkills.length > 0 &&
+                              newSkills.map((skill, _key) => {
+                                return (
+                                  <>
+                                    <span
+                                      key={_key}
+                                      className="badge bg-warning text-black me-1 p-2 mb-2"
+                                    >
+                                      {skill}
+
+                                      <button
+                                        type="button"
+                                        class="btn-close btn-close-black ms-1"
+                                        aria-label="Close"
+                                        onClick={() => {
+                                          console.log(newSkills[_key]);
+                                          newSkills.splice(_key, 1);
+                                          setNewSkills(newSkills);
+                                        }}
+                                      ></button>
+                                    </span>
+                                  </>
+                                );
+                              })}
+                          </div>
                         </div>
                         <div className="col-lg-2 col-12">
                           <button className="btn btn-warning w-100">
@@ -272,7 +325,6 @@ function Jobseeker(props) {
                       </div>
                     </div>
                   </div>
-
                   <div className="card bg-white rounded mt-4">
                     <div className="card-header d-flex align-items-center pt-4 pb-3">
                       <h5>Pengalaman Kerja</h5>
